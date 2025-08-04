@@ -3,101 +3,80 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>TubeEarn Owner Dashboard</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+    }
     body {
-      background-color: #0f172a;
-      color: #fff;
+      display: flex;
+      height: 100vh;
+      background-color: #f0f2f5;
     }
     .sidebar {
-      background-color: #1e293b;
-      height: 100vh;
-      padding-top: 1rem;
+      width: 240px;
+      background-color: #111827;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      padding: 20px 10px;
     }
-    .sidebar a {
-      color: #cbd5e1;
-      text-decoration: none;
-      padding: 0.75rem 1rem;
-      display: block;
-    }
-    .sidebar a:hover {
-      background-color: #334155;
-    }
-    .header {
-      background-color: #1e293b;
-      padding: 1rem;
+    .sidebar h2 {
       text-align: center;
-      font-weight: bold;
+      margin-bottom: 20px;
+      font-size: 22px;
+    }
+    .nav-link {
+      display: flex;
+      align-items: center;
+      padding: 12px 16px;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 6px;
+      margin-bottom: 8px;
+      transition: background 0.2s;
+    }
+    .nav-link:hover {
+      background-color: #1f2937;
+    }
+    .nav-link i {
+      margin-right: 12px;
+      width: 20px;
+      text-align: center;
     }
     .main {
-      padding: 2rem;
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto;
     }
-    .card {
-      background-color: #1e293b;
-      border: none;
-      color: #fff;
-      margin-bottom: 1rem;
-    }
-    .card-title {
-      font-size: 1.2rem;
-    }
-    .card-icon {
-      font-size: 2rem;
-      margin-right: 0.5rem;
+    .section-title {
+      font-size: 24px;
+      margin-bottom: 10px;
     }
   </style>
 </head>
 <body>
-  <div class="container-fluid">
-    <div class="row">
-      <!-- Sidebar -->
-      <div class="col-md-3 sidebar">
-        <div class="header">TubeEarn Owner Panel</div>
-        <a href="#dashboard">📊 Dashboard</a>
-        <a href="#wallet">💼 Wallet Control</a>
-        <a href="#security">🔒 Security</a>
-        <a href="#users">👤 User Management</a>
-        <a href="#adsense">🎯 AdSense Control</a>
-        <a href="#video">🎥 Video Monetization</a>
-        <a href="#shorts">📱 Shorts Control</a>
-        <a href="#live">🔴 Live Performances</a>
-        <a href="#singing">🎤 Singing Panel</a>
-        <a href="#editing">✂️ Editing Features</a>
-        <a href="#duet">🤝 Duet Tools</a>
-        <a href="#party">🎉 Party Match</a>
-        <a href="#referral">📨 Referral System</a>
-        <a href="#career">💼 Career Section</a>
-        <a href="#education">📚 Raj Education System</a>
-        <a href="#settings">⚙️ Site Settings</a>
-      </div><!-- Main Content -->
-  <div class="col-md-9 main">
-    <h2 id="dashboard">📊 Dashboard Overview</h2>
-    <div class="row">
-      <div class="col-md-4">
-        <div class="card p-3">
-          <div class="card-title">Total Users</div>
-          <div class="card-text">1,20,500</div>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="card p-3">
-          <div class="card-title">Active Subscriptions</div>
-          <div class="card-text">8,900</div>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="card p-3">
-          <div class="card-title">Videos Uploaded</div>
-          <div class="card-text">3,52,000</div>
-        </div>
-      </div>
-    </div>
-    <!-- More section UIs to be added here like Wallet, AdSense, etc -->
-    <p class="mt-5">👇 नीचे बताओ किस सेक्शन का डिटेल कोड सबसे पहले डालूं (AdSense Control, Shorts, Singing, Education, etc)?</p>
+  <div class="sidebar">
+    <h2>TubeEarn Admin</h2>
+    <a class="nav-link" href="#"><i class="fas fa-home"></i>Dashboard</a>
+    <a class="nav-link" href="#"><i class="fas fa-video"></i>Short Videos</a>
+    <a class="nav-link" href="#"><i class="fas fa-film"></i>Long Videos</a>
+    <a class="nav-link" href="#"><i class="fas fa-broadcast-tower"></i>Live Performances</a>
+    <a class="nav-link" href="#"><i class="fas fa-microphone"></i>Singing Room</a>
+    <a class="nav-link" href="#"><i class="fas fa-book"></i>Education System</a>
+    <a class="nav-link" href="#"><i class="fas fa-wallet"></i>Wallet</a>
+    <a class="nav-link" href="#"><i class="fas fa-user-friends"></i>Referral System</a>
+    <a class="nav-link" href="#"><i class="fas fa-hand-holding-usd"></i>Monetization</a>
+    <a class="nav-link" href="#"><i class="fas fa-ad"></i>Adsense Control</a>
+    <a class="nav-link" href="#"><i class="fas fa-shield-alt"></i>Security</a>
+    <a class="nav-link" href="#"><i class="fas fa-cog"></i>Settings</a>
   </div>
-</div>
-
+  <div class="main">
+    <h1 class="section-title">Welcome to TubeEarn Admin Panel</h1>
+    <p>Use the sidebar to manage all platform features including videos, wallet, monetization, security, and more.</p>
   </div>
 </body>
 </html>
