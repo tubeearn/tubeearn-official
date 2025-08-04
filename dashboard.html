@@ -1,0 +1,136 @@
+<!-- dashboard.html --><!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TubeEarn - Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+</head>
+<body>
+  <!-- Top Navigation with Horizontal Icons -->
+  <div class="top-nav">
+    <div class="icon" onclick="showSection('balance')"><i class="fas fa-wallet"></i><p>Balance</p></div>
+    <div class="icon" onclick="showSection('shorts')"><i class="fas fa-video"></i><p>Shorts</p></div>
+    <div class="icon" onclick="showSection('long')"><i class="fas fa-film"></i><p>Long</p></div>
+    <div class="icon" onclick="showSection('ads')"><i class="fas fa-ad"></i><p>Ads</p></div>
+    <div class="icon" onclick="showSection('profile')"><i class="fas fa-user"></i><p>Profile</p></div>
+    <div class="icon" onclick="showSection('education')"><i class="fas fa-book"></i><p>Education</p></div>
+    <div class="icon" onclick="showSection('gifts')"><i class="fas fa-gift"></i><p>Gifts</p></div>
+  </div>  <!-- Main Content Area -->  <div class="main-section">
+    <!-- Balance Summary Section -->
+    <div id="balance" class="section">
+      <h2>Total Balance</h2>
+      <div class="cards">
+        <div class="card">
+          <h3>Total Amount</h3>
+          <p>₹1,25,500</p>
+        </div>
+        <div class="card">
+          <h3>Pending</h3>
+          <p>₹12,500</p>
+        </div>
+        <div class="card">
+          <h3>Paid Revenue</h3>
+          <p>₹1,13,000</p>
+        </div>
+        <div class="card">
+          <h3>Monthly Revenue</h3>
+          <p>₹25,000</p>
+        </div>
+        <div class="card">
+          <h3>Daily Revenue</h3>
+          <p>₹1,100</p>
+        </div>
+      </div>
+    </div><!-- Shorts Revenue Section -->
+<div id="shorts" class="section" style="display:none">
+  <h2>Shorts Data</h2>
+  <div class="cards">
+    <div class="card">
+      <h3>Total Revenue</h3>
+      <p>₹35,000</p>
+    </div>
+    <div class="card">
+      <h3>Total Creators</h3>
+      <p>750</p>
+    </div>
+    <div class="card">
+      <h3>Total Channels</h3>
+      <p>320</p>
+    </div>
+  </div>
+</div>
+
+<!-- Add other sections similarly: long, ads, profile, education, gifts -->
+
+  </div>  <script>
+    function showSection(id) {
+      const sections = document.querySelectorAll('.section');
+      sections.forEach(sec => sec.style.display = 'none');
+      document.getElementById(id).style.display = 'block';
+    }
+  </script></body>
+</html><style>
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: #f3f4f6;
+  margin: 0;
+}
+
+.top-nav {
+  background: #1e3a8a;
+  color: white;
+  display: flex;
+  justify-content: space-around;
+  padding: 15px 0;
+}
+
+.top-nav .icon {
+  text-align: center;
+  cursor: pointer;
+}
+
+.top-nav .icon i {
+  font-size: 20px;
+  color: white;
+}
+
+.top-nav .icon p {
+  font-weight: bold;
+  margin: 5px 0 0;
+}
+
+.main-section {
+  padding: 20px;
+}
+
+.section h2 {
+  color: #1e3a8a;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 15px;
+}
+
+.card {
+  background: #f59e0b;
+  color: white;
+  padding: 15px;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.card h3 {
+  margin: 0;
+  font-weight: bold;
+}
+
+.card p {
+  font-size: 18px;
+  margin-top: 10px;
+}
+</style>
