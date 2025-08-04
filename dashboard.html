@@ -17,31 +17,28 @@
   </style>
 </head>
 <body class="bg-gray-900 text-white">
-
   <!-- Header -->
   <header class="bg-blue-500 p-4 text-center text-xl font-bold flex justify-between items-center">
     <span>TubeEarn Admin Dashboard</span>
-    <button onclick="logout()" class="bg-red-600 hover:bg-red-700 text-white px-4 py-1 rounded">
-      Logout
-    </button>
+    <button onclick="logout()" class="bg-red-500 px-3 py-1 rounded-lg hover:bg-red-600">Logout</button>
   </header>
 
   <!-- Horizontal Scrollable Icons -->
   <div class="flex overflow-x-auto space-x-4 p-4 bg-gray-800 scrollbar-hide">
-    <div class="flex-shrink-0 bg-orange-400 p-3 rounded-xl text-center w-28">🎥<br>Shorts</div>
-    <div class="flex-shrink-0 bg-orange-400 p-3 rounded-xl text-center w-28">📺<br>Long Video</div>
-    <div class="flex-shrink-0 bg-orange-400 p-3 rounded-xl text-center w-28">💰<br>Wallet</div>
-    <div class="flex-shrink-0 bg-orange-400 p-3 rounded-xl text-center w-28">🎁<br>Gifts</div>
-    <div class="flex-shrink-0 bg-orange-400 p-3 rounded-xl text-center w-28">🎤<br>Singing</div>
-    <div class="flex-shrink-0 bg-orange-400 p-3 rounded-xl text-center w-28">👥<br>Dating</div>
-    <div class="flex-shrink-0 bg-orange-400 p-3 rounded-xl text-center w-28">📚<br>Billi Edu</div>
-    <div class="flex-shrink-0 bg-orange-400 p-3 rounded-xl text-center w-28">🎮<br>Gaming</div>
-    <div class="flex-shrink-0 bg-orange-400 p-3 rounded-xl text-center w-28">💼<br>Career</div>
-    <div class="flex-shrink-0 bg-orange-400 p-3 rounded-xl text-center w-28">📈<br>Analytics</div>
+    <button onclick="openSection('shorts')" class="flex-shrink-0 bg-orange-400 p-3 rounded-xl text-center w-28">🎥<br>Shorts</button>
+    <button onclick="openSection('long')" class="flex-shrink-0 bg-orange-400 p-3 rounded-xl text-center w-28">📺<br>Long Video</button>
+    <button onclick="openSection('wallet')" class="flex-shrink-0 bg-orange-400 p-3 rounded-xl text-center w-28">💰<br>Wallet</button>
+    <button onclick="openSection('gifts')" class="flex-shrink-0 bg-orange-400 p-3 rounded-xl text-center w-28">🎁<br>Gifts</button>
+    <button onclick="openSection('singing')" class="flex-shrink-0 bg-orange-400 p-3 rounded-xl text-center w-28">🎤<br>Singing</button>
+    <button onclick="openSection('dating')" class="flex-shrink-0 bg-orange-400 p-3 rounded-xl text-center w-28">👥<br>Dating</button>
+    <button onclick="openSection('edu')" class="flex-shrink-0 bg-orange-400 p-3 rounded-xl text-center w-28">📚<br>Billi Edu</button>
+    <button onclick="openSection('game')" class="flex-shrink-0 bg-orange-400 p-3 rounded-xl text-center w-28">🎮<br>Gaming</button>
+    <button onclick="openSection('career')" class="flex-shrink-0 bg-orange-400 p-3 rounded-xl text-center w-28">💼<br>Career</button>
+    <button onclick="openSection('analytics')" class="flex-shrink-0 bg-orange-400 p-3 rounded-xl text-center w-28">📈<br>Analytics</button>
   </div>
 
-  <!-- Balance Sheet -->
-  <section class="p-4">
+  <!-- Balance Sheet Section -->
+  <section class="p-4" id="dashboard">
     <h2 class="text-lg font-bold mb-2">💵 Total Balance Sheet</h2>
     <div class="grid grid-cols-2 gap-4">
       <div class="bg-gray-800 p-4 rounded-lg shadow">Total Balance<br><span class="text-2xl text-green-400 font-bold">₹00.00</span></div>
@@ -53,8 +50,8 @@
     </div>
   </section>
 
-  <!-- Shorts Section -->
-  <section class="p-4">
+  <!-- Shorts Stats Section -->
+  <section class="p-4" id="shorts">
     <h2 class="text-lg font-bold mb-2">🎥 Shorts Stats</h2>
     <div class="grid grid-cols-2 gap-4">
       <div class="bg-gray-800 p-4 rounded-lg shadow">Revenue<br><span class="text-xl">₹2,354</span></div>
@@ -70,15 +67,20 @@
       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVqYnZpZGlybnNqdmFkdmVrZWRlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTM2MTA3ODMsImV4cCI6MjA2OTE4Njc4M30.KoCt8f2bXjn3843XOsRMLwyZ0lKpARkrRqb_GXlGfUs'
     );
 
+    // Example: Logout Function
     async function logout() {
       const { error } = await supabase.auth.signOut();
       if (error) {
-        alert('Logout failed!');
-        console.error(error);
+        alert('Logout Failed!');
       } else {
-        alert('Logged out!');
-        window.location.href = '/login.html'; // Change path if login page is elsewhere
+        alert('Logged out successfully!');
+        window.location.href = "/login.html"; // Change as per your login page
       }
+    }
+
+    // Dummy Navigation Handler
+    function openSection(name) {
+      alert(`Opening ${name} section... (Function can be modified to show actual content)`);
     }
   </script>
 </body>
