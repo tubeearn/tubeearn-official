@@ -3,131 +3,81 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>TubeEarn Owner Panel</title>
+  <title>TubeEarn Admin Login</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: #f0f2f5;
+      background: #000;
+      color: #fff;
       display: flex;
-      align-items: center;
       justify-content: center;
+      align-items: center;
       height: 100vh;
-      margin: 0;
     }
-    .box {
-      background: white;
+    .login-box {
+      background: #111;
       padding: 30px;
       border-radius: 12px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.2);
-      width: 100%;
-      max-width: 400px;
+      box-shadow: 0 0 10px #444;
     }
-    h2 {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-    input, button {
+    input {
+      padding: 10px;
+      margin: 10px 0;
       width: 100%;
-      padding: 12px;
-      margin-top: 10px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-      font-size: 16px;
+      border: none;
+      border-radius: 6px;
     }
     button {
-      background: #007bff;
-      color: white;
+      background: #ff0033;
       border: none;
-      cursor: pointer;
-    }
-    .hidden {
-      display: none;
-    }
-    .error {
-      color: red;
-      text-align: center;
-      margin-top: 10px;
-    }
-    .success {
-      text-align: center;
-    }
-    img {
+      color: white;
+      padding: 10px;
       width: 100%;
-      border-radius: 10px;
-      margin-top: 20px;
+      cursor: pointer;
+      border-radius: 6px;
     }
   </style>
 </head>
 <body>
-
-  <div class="box" id="loginBox">
-    <h2>Owner Login</h2>
-    <input type="email" id="email" placeholder="Enter Email">
-    <input type="password" id="password" placeholder="Enter Password">
+  <div class="login-box">
+    <h2>Admin Login</h2>
+    <input type="email" id="email" placeholder="Email" />
+    <input type="password" id="password" placeholder="Password" />
     <button onclick="login()">Login</button>
-    <div id="errorBox" class="error"></div>
+    <p id="msg"></p>
   </div>
 
-  <div class="box hidden" id="dashboardBox">
-    <h2 class="success">Welcome, TubeEarn Owner</h2>
-    <button onclick="logout()">Logout</button>
-
-    <h3 style="margin-top: 20px;">Change Credentials</h3>
-    <input type="email" id="newEmail" placeholder="New Email">
-    <input type="password" id="newPassword" placeholder="New Password">
-    <button onclick="changeCredentials()">Update</button>
-
-    <h3 style="margin-top: 20px;">Dashboard Preview</h3>
-    <img src="https://via.placeholder.com/350x150?text=TubeEarn+Admin+1" alt="Preview 1">
-    <img src="https://via.placeholder.com/350x150?text=TubeEarn+Admin+2" alt="Preview 2">
-  </div>
-
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
   <script>
-    const defaultEmail = "tubeEarn.help@gmail.com";
-    const defaultPass = "Sanjeev95@";
+    const SUPABASE_URL = 'https://ejbvidirnsjvadvekede.supabase.co';
+    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVqYnZpZGlybnNqdmFkdmVrZWRlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTM2MTA3ODMsImV4cCI6MjA2OTE4Njc4M30.KoCt8f2bXjn3843XOsRMLwyZ0lKpARkrRqb_GXlGfUs';
 
-    const getStored = () => {
-      return {
-        email: localStorage.getItem("ownerEmail") || defaultEmail,
-        pass: localStorage.getItem("ownerPassword") || defaultPass
-      };
-    };
+    const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-    function login() {
-      const email = document.getElementById("email").value.trim();
-      const password = document.getElementById("password").value.trim();
-      const { email: storedEmail, pass: storedPass } = getStored();
+    async function login() {
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value.trim();
+      const msg = document.getElementById('msg');
 
-      if (email === storedEmail && password === storedPass) {
-        document.getElementById("loginBox").classList.add("hidden");
-        document.getElementById("dashboardBox").classList.remove("hidden");
-        document.getElementById("errorBox").innerText = "";
-      } else {
-        document.getElementById("errorBox").innerText = "❌ Invalid credentials.";
+      if (email !== "tubeearn.help@gmail.com") {
+        msg.textContent = "❌ Unauthorized email!";
+        return;
       }
-    }
 
-    function logout() {
-      document.getElementById("loginBox").classList.remove("hidden");
-      document.getElementById("dashboardBox").classList.add("hidden");
-      document.getElementById("email").value = "";
-      document.getElementById("password").value = "";
-    }
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password
+      });
 
-    function changeCredentials() {
-      const newEmail = document.getElementById("newEmail").value.trim();
-      const newPassword = document.getElementById("newPassword").value.trim();
-
-      if (newEmail && newPassword) {
-        localStorage.setItem("ownerEmail", newEmail);
-        localStorage.setItem("ownerPassword", newPassword);
-        alert("✅ Credentials updated. Please login again.");
-        logout();
+      if (error) {
+        msg.textContent = "❌ Invalid credentials!";
+        console.error(error);
       } else {
-        alert("⚠️ Enter both new email and password.");
+        msg.textContent = "✅ Logged in! Redirecting...";
+        localStorage.setItem("user", JSON.stringify(data));
+        window.location.href = "dashboard.html";
       }
     }
   </script>
-
 </body>
 </html>
