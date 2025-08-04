@@ -1,146 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>TubeEarn Login</title>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI'; }
-    body {
-      background: linear-gradient(to right, #667eea, #764ba2);
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      padding-top: 60px;
-    }
-    .login-box {
-      background: white;
-      padding: 2rem;
-      border-radius: 12px;
-      box-shadow: 0 4px 30px rgba(0,0,0,0.2);
-      width: 100%;
-      max-width: 400px;
-    }
-    .login-box h2 {
-      text-align: center;
-      margin-bottom: 1.5rem;
-      color: #333;
-    }
-    input, button {
-      width: 100%;
-      padding: 10px;
-      margin-top: 10px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      font-size: 16px;
-    }
-    button {
-      background: #667eea;
-      color: white;
-      border: none;
-      cursor: pointer;
-    }
-    .link {
-      margin-top: 10px;
-      text-align: center;
-      font-size: 14px;
-    }
-    .link a {
-      color: #667eea;
-      text-decoration: none;
-    }
-    .section {
-      margin-top: 1.5rem;
-    }
-  </style>
+  <title>Login - TubeEarn</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-<div class="login-box">
-  <h2>TubeEarn Admin Login</h2>
-
-  <input type="email" id="email" placeholder="Email" />
-  <input type="password" id="password" placeholder="Password" />
-  <button onclick="login()">Login</button>
-
-  <div class="link">
-    <a href="#" onclick="forgotPassword()">Forgot Password?</a>
+  <div class="login-container">
+    <h2>TubeEarn Owner Login</h2>
+    <form id="loginForm">
+      <input type="email" id="email" placeholder="Email" required />
+      <input type="password" id="password" placeholder="Password" required />
+      <button type="submit">Login</button>
+      <div class="links">
+        <a href="#" onclick="goToForgot()">Forgot Password?</a>
+        <a href="#" onclick="goToEmailChange()">Change Email?</a>
+      </div>
+    </form>
   </div>
 
-  <div class="section">
-    <h4>Change Email (Secure)</h4>
-    <input type="email" id="currentEmail" placeholder="Current Email" />
-    <input type="password" id="currentPassword" placeholder="Password" />
-    <input type="email" id="newEmail" placeholder="New Email" />
-    <button onclick="secureEmailChange()">Update Email</button>
-  </div>
-</div>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <script>
+    const SUPABASE_URL = "https://ejbvidirnsjvadvekede.supabase.co";
+    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...";
+    const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-<script>
-  const supabase = supabase.createClient(
-    'https://ejbvidirnsjvadvekede.supabase.co',
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVqYnZpZGlybnNqdmFkdmVrZWRlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTM2MTA3ODMsImV4cCI6MjA2OTE4Njc4M30.KoCt8f2bXjn3843XOsRMLwyZ0lKpARkrRqb_GXlGfUs'
-  );
+    const form = document.getElementById('loginForm');
 
-  async function login() {
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
 
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email,
-      password
+      const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+
+      if (error) {
+        alert('Login failed: ' + error.message);
+      } else {
+        alert('Login success! Redirecting...');
+        window.location.href = "dashboard.html"; // your dashboard page
+      }
     });
 
-    if (error) {
-      alert("Login Failed: " + error.message);
-    } else {
-      alert("Login Success ✅");
-      window.location.href = "dashboard.html";
-    }
-  }
-
-  async function forgotPassword() {
-    const email = document.getElementById('email').value;
-    if (!email) {
-      alert("Please enter your email.");
-      return;
+    function goToForgot() {
+      window.location.href = "reset-password.html";
     }
 
-    const { data, error } = await supabase.auth.resetPasswordForEmail(email);
-    if (error) {
-      alert("Error: " + error.message);
-    } else {
-      alert("Reset link sent to your email ✅");
+    function goToEmailChange() {
+      window.location.href = "change-email.html";
     }
-  }
-
-  async function secureEmailChange() {
-    const currentEmail = document.getElementById('currentEmail').value;
-    const currentPassword = document.getElementById('currentPassword').value;
-    const newEmail = document.getElementById('newEmail').value;
-
-    const { data: loginData, error: loginError } = await supabase.auth.signInWithPassword({
-      email: currentEmail,
-      password: currentPassword
-    });
-
-    if (loginError) {
-      alert("Re-authentication failed: " + loginError.message);
-      return;
-    }
-
-    const { error: updateError } = await supabase.auth.updateUser({
-      email: newEmail
-    });
-
-    if (updateError) {
-      alert("Email change failed: " + updateError.message);
-    } else {
-      alert("Email update requested. Please confirm it from your new email inbox.");
-    }
-  }
-</script>
-
+  </script>
 </body>
 </html>
