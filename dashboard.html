@@ -1,136 +1,85 @@
-<!-- dashboard.html --><!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TubeEarn - Dashboard</title>
-  <link rel="stylesheet" href="style.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
-</head>
-<body>
-  <!-- Top Navigation with Horizontal Icons -->
-  <div class="top-nav">
-    <div class="icon" onclick="showSection('balance')"><i class="fas fa-wallet"></i><p>Balance</p></div>
-    <div class="icon" onclick="showSection('shorts')"><i class="fas fa-video"></i><p>Shorts</p></div>
-    <div class="icon" onclick="showSection('long')"><i class="fas fa-film"></i><p>Long</p></div>
-    <div class="icon" onclick="showSection('ads')"><i class="fas fa-ad"></i><p>Ads</p></div>
-    <div class="icon" onclick="showSection('profile')"><i class="fas fa-user"></i><p>Profile</p></div>
-    <div class="icon" onclick="showSection('education')"><i class="fas fa-book"></i><p>Education</p></div>
-    <div class="icon" onclick="showSection('gifts')"><i class="fas fa-gift"></i><p>Gifts</p></div>
-  </div>  <!-- Main Content Area -->  <div class="main-section">
-    <!-- Balance Summary Section -->
-    <div id="balance" class="section">
-      <h2>Total Balance</h2>
-      <div class="cards">
-        <div class="card">
-          <h3>Total Amount</h3>
-          <p>₹1,25,500</p>
-        </div>
-        <div class="card">
-          <h3>Pending</h3>
-          <p>₹12,500</p>
-        </div>
-        <div class="card">
-          <h3>Paid Revenue</h3>
-          <p>₹1,13,000</p>
-        </div>
-        <div class="card">
-          <h3>Monthly Revenue</h3>
-          <p>₹25,000</p>
-        </div>
-        <div class="card">
-          <h3>Daily Revenue</h3>
-          <p>₹1,100</p>
-        </div>
-      </div>
-    </div><!-- Shorts Revenue Section -->
-<div id="shorts" class="section" style="display:none">
-  <h2>Shorts Data</h2>
-  <div class="cards">
-    <div class="card">
-      <h3>Total Revenue</h3>
-      <p>₹35,000</p>
-    </div>
-    <div class="card">
-      <h3>Total Creators</h3>
-      <p>750</p>
-    </div>
-    <div class="card">
-      <h3>Total Channels</h3>
-      <p>320</p>
-    </div>
-  </div>
-</div>
-
-<!-- Add other sections similarly: long, ads, profile, education, gifts -->
-
-  </div>  <script>
-    function showSection(id) {
-      const sections = document.querySelectorAll('.section');
-      sections.forEach(sec => sec.style.display = 'none');
-      document.getElementById(id).style.display = 'block';
+  <title>TubeEarn Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/@supabase/supabase-js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
     }
-  </script></body>
-</html><style>
-body {
-  font-family: 'Segoe UI', sans-serif;
-  background: #f3f4f6;
-  margin: 0;
-}
+    .scrollbar-hide::-webkit-scrollbar {
+      display: none;
+    }
+  </style>
+</head>
+<body class="bg-gray-900 text-white">
 
-.top-nav {
-  background: #1e3a8a;
-  color: white;
-  display: flex;
-  justify-content: space-around;
-  padding: 15px 0;
-}
+  <!-- Header -->
+  <header class="bg-blue-500 p-4 text-center text-xl font-bold flex justify-between items-center">
+    <span>TubeEarn Admin Dashboard</span>
+    <button onclick="logout()" class="bg-red-600 hover:bg-red-700 text-white px-4 py-1 rounded">
+      Logout
+    </button>
+  </header>
 
-.top-nav .icon {
-  text-align: center;
-  cursor: pointer;
-}
+  <!-- Horizontal Scrollable Icons -->
+  <div class="flex overflow-x-auto space-x-4 p-4 bg-gray-800 scrollbar-hide">
+    <div class="flex-shrink-0 bg-orange-400 p-3 rounded-xl text-center w-28">🎥<br>Shorts</div>
+    <div class="flex-shrink-0 bg-orange-400 p-3 rounded-xl text-center w-28">📺<br>Long Video</div>
+    <div class="flex-shrink-0 bg-orange-400 p-3 rounded-xl text-center w-28">💰<br>Wallet</div>
+    <div class="flex-shrink-0 bg-orange-400 p-3 rounded-xl text-center w-28">🎁<br>Gifts</div>
+    <div class="flex-shrink-0 bg-orange-400 p-3 rounded-xl text-center w-28">🎤<br>Singing</div>
+    <div class="flex-shrink-0 bg-orange-400 p-3 rounded-xl text-center w-28">👥<br>Dating</div>
+    <div class="flex-shrink-0 bg-orange-400 p-3 rounded-xl text-center w-28">📚<br>Billi Edu</div>
+    <div class="flex-shrink-0 bg-orange-400 p-3 rounded-xl text-center w-28">🎮<br>Gaming</div>
+    <div class="flex-shrink-0 bg-orange-400 p-3 rounded-xl text-center w-28">💼<br>Career</div>
+    <div class="flex-shrink-0 bg-orange-400 p-3 rounded-xl text-center w-28">📈<br>Analytics</div>
+  </div>
 
-.top-nav .icon i {
-  font-size: 20px;
-  color: white;
-}
+  <!-- Balance Sheet -->
+  <section class="p-4">
+    <h2 class="text-lg font-bold mb-2">💵 Total Balance Sheet</h2>
+    <div class="grid grid-cols-2 gap-4">
+      <div class="bg-gray-800 p-4 rounded-lg shadow">Total Balance<br><span class="text-2xl text-green-400 font-bold">₹00.00</span></div>
+      <div class="bg-gray-800 p-4 rounded-lg shadow">Pending Amount<br><span class="text-xl">₹0</span></div>
+      <div class="bg-gray-800 p-4 rounded-lg shadow">Today Revenue<br><span class="text-xl">₹0</span></div>
+      <div class="bg-gray-800 p-4 rounded-lg shadow">Monthly Revenue<br><span class="text-xl">₹0</span></div>
+      <div class="bg-gray-800 p-4 rounded-lg shadow">Ads Revenue<br><span class="text-xl">₹0</span></div>
+      <div class="bg-gray-800 p-4 rounded-lg shadow">Profile Score<br><span class="text-xl">89%</span></div>
+    </div>
+  </section>
 
-.top-nav .icon p {
-  font-weight: bold;
-  margin: 5px 0 0;
-}
+  <!-- Shorts Section -->
+  <section class="p-4">
+    <h2 class="text-lg font-bold mb-2">🎥 Shorts Stats</h2>
+    <div class="grid grid-cols-2 gap-4">
+      <div class="bg-gray-800 p-4 rounded-lg shadow">Revenue<br><span class="text-xl">₹2,354</span></div>
+      <div class="bg-gray-800 p-4 rounded-lg shadow">Total Creators<br><span class="text-xl">1,245</span></div>
+      <div class="bg-gray-800 p-4 rounded-lg shadow">Total Channels<br><span class="text-xl">859</span></div>
+      <div class="bg-gray-800 p-4 rounded-lg shadow">All Shorts Videos<br><span class="text-xl">12,530</span></div>
+    </div>
+  </section>
 
-.main-section {
-  padding: 20px;
-}
+  <script>
+    const supabase = supabase.createClient(
+      'https://ejbvidirnsjvadvekede.supabase.co',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVqYnZpZGlybnNqdmFkdmVrZWRlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTM2MTA3ODMsImV4cCI6MjA2OTE4Njc4M30.KoCt8f2bXjn3843XOsRMLwyZ0lKpARkrRqb_GXlGfUs'
+    );
 
-.section h2 {
-  color: #1e3a8a;
-  font-weight: bold;
-  margin-bottom: 20px;
-}
-
-.cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  gap: 15px;
-}
-
-.card {
-  background: #f59e0b;
-  color: white;
-  padding: 15px;
-  border-radius: 12px;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-}
-
-.card h3 {
-  margin: 0;
-  font-weight: bold;
-}
-
-.card p {
-  font-size: 18px;
-  margin-top: 10px;
-}
-</style>
+    async function logout() {
+      const { error } = await supabase.auth.signOut();
+      if (error) {
+        alert('Logout failed!');
+        console.error(error);
+      } else {
+        alert('Logged out!');
+        window.location.href = '/login.html'; // Change path if login page is elsewhere
+      }
+    }
+  </script>
+</body>
+</html>
