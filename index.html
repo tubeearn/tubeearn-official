@@ -1,100 +1,110 @@
-<!-- File: tubeearn-official/dashboard.html --><!DOCTYPE html><html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TubeEarn Admin Dashboard</title>
-  <link rel="stylesheet" href="styles.css" />
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TubeEarn Admin Login</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+    .login-container {
+      max-width: 400px;
+      margin: 80px auto;
+      background: #fff;
+      padding: 30px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+    }
+    .dashboard {
+      padding: 20px;
+    }
+    .nav-item:hover {
+      background-color: #f1f1f1;
+      cursor: pointer;
+    }
+    .card {
+      border-radius: 15px;
+    }
+  </style>
 </head>
 <body>
-  <header>
-    <h1>TubeEarn Admin Panel</h1>
-    <button onclick="logout()">Logout</button>
-  </header>  <section class="stats">
-    <div class="card">Total Users: <span id="totalUsers">--</span></div>
-    <div class="card">Active Videos: <span id="activeVideos">--</span></div>
-    <div class="card">Revenue Generated: ₹<span id="revenue">--</span></div>
-  </section>  <section class="upload">
-    <h2>Upload File to Supabase</h2>
-    <input type="file" id="uploadFile" />
-    <button onclick="uploadFile()">Upload</button>
-    <div id="uploadStatus"></div>
-  </section>  <section class="wallet">
-    <h2>Transaction History</h2>
-    <ul id="transactions"></ul>
-  </section>  <script type="module">
-    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+  <div id="loginPage" class="login-container">
+    <h3 class="text-center mb-4">TubeEarn Admin Login</h3>
+    <div class="mb-3">
+      <label for="email" class="form-label">Email</label>
+      <input type="email" class="form-control" id="email">
+    </div>
+    <div class="mb-3">
+      <label for="password" class="form-label">Password</label>
+      <input type="password" class="form-control" id="password">
+    </div>
+    <button class="btn btn-primary w-100" onclick="loginAdmin()">Login</button>
+  </div>  <div id="dashboardPage" style="display: none;">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">TubeEarn Admin</a>
+        <button class="btn btn-outline-light" onclick="logout()">Logout</button>
+      </div>
+    </nav>
+    <div class="container dashboard">
+      <div class="row">
+        <div class="col-md-3">
+          <ul class="list-group">
+            <li class="list-group-item nav-item">Dashboard</li>
+            <li class="list-group-item nav-item">User Management</li>
+            <li class="list-group-item nav-item">Earnings Report</li>
+            <li class="list-group-item nav-item">Videos Control</li>
+            <li class="list-group-item nav-item">Withdraw Requests</li>
+            <li class="list-group-item nav-item">Settings</li>
+          </ul>
+        </div>
+        <div class="col-md-9">
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <div class="card bg-light p-3">
+                <h5>Total Users</h5>
+                <p class="fs-4">2,341</p>
+              </div>
+            </div>
+            <div class="col-md-6 mb-3">
+              <div class="card bg-light p-3">
+                <h5>Today's Revenue</h5>
+                <p class="fs-4">₹12,300</p>
+              </div>
+            </div>
+            <div class="col-md-6 mb-3">
+              <div class="card bg-light p-3">
+                <h5>Pending Withdrawals</h5>
+                <p class="fs-4">₹8,150</p>
+              </div>
+            </div>
+            <div class="col-md-6 mb-3">
+              <div class="card bg-light p-3">
+                <h5>Active Performers</h5>
+                <p class="fs-4">91</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>  <script>
+    function loginAdmin() {
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
 
-    const supabaseUrl = 'https://ejbvidirnsjvadvekede.supabase.co';
-    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVqYnZpZGlybnNqdmFkdmVrZWRlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTM2MTA3ODMsImV4cCI6MjA2OTE4Njc4M30.KoCt8f2bXjn3843XOsRMLwyZ0lKpARkrRqb_GXlGfUs';
-    const supabase = createClient(supabaseUrl, supabaseKey);
-
-    async function uploadFile() {
-      const fileInput = document.getElementById('uploadFile');
-      const file = fileInput.files[0];
-      if (!file) return alert('Select a file first.');
-
-      const { data, error } = await supabase.storage
-        .from('wallet-transactions')
-        .upload(`uploads/${Date.now()}-${file.name}`, file);
-
-      if (error) {
-        document.getElementById('uploadStatus').innerText = 'Upload failed: ' + error.message;
+      if (email === "tubeearn.help@gmail.com" && password === "Sanjeev95@") {
+        document.getElementById("loginPage").style.display = "none";
+        document.getElementById("dashboardPage").style.display = "block";
       } else {
-        document.getElementById('uploadStatus').innerText = 'Uploaded successfully';
+        alert("Invalid credentials");
       }
     }
-
-    async function fetchTransactions() {
-      const { data, error } = await supabase.storage.from('wallet-transactions').list('uploads');
-      const list = document.getElementById('transactions');
-      list.innerHTML = '';
-
-      if (data && data.length > 0) {
-        data.forEach(item => {
-          const li = document.createElement('li');
-          li.innerText = item.name + ' (' + new Date(item.created_at).toLocaleString() + ')';
-          list.appendChild(li);
-        });
-      } else {
-        list.innerHTML = '<li>No transactions found</li>';
-      }
-    }
-
-    fetchTransactions();
 
     function logout() {
-      localStorage.clear();
-      window.location.href = 'login.html';
+      document.getElementById("dashboardPage").style.display = "none";
+      document.getElementById("loginPage").style.display = "block";
     }
   </script></body>
-</html><!-- File: styles.css --><style>
-  body {
-    font-family: Arial, sans-serif;
-    padding: 20px;
-    background: #f4f4f4;
-  }
-  header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .stats {
-    display: flex;
-    gap: 10px;
-    margin: 20px 0;
-  }
-  .card {
-    background: white;
-    padding: 15px;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  }
-  .upload, .wallet {
-    background: white;
-    padding: 20px;
-    margin: 20px 0;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  }
-</style>
+</html>
