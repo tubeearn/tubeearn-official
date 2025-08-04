@@ -1,49 +1,49 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>TubeEarn Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
   <style>
     body {
-      font-family: Arial, sans-serif;
-      padding: 2rem;
-      background: #f0f2f5;
+      font-family: 'Poppins', sans-serif;
     }
-    .dashboard {
-      max-width: 600px;
-      margin: auto;
-      background: #fff;
-      padding: 2rem;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    }
-    h1 {
-      color: #333;
-    }
-    .email {
-      font-weight: bold;
-      color: #1a73e8;
+    .scrollbar-hide::-webkit-scrollbar {
+      display: none;
     }
   </style>
 </head>
-<body>
-  <div class="dashboard">
-    <h1>Welcome to TubeEarn Dashboard</h1>
-    <p>Logged in as: <span class="email" id="userEmail">Loading...</span></p>
-  </div>
-
-  <script>
-    // Get email from localStorage (set during login)
-    const email = localStorage.getItem('userEmail');
-
-    // Show email if found
-    if (email) {
-      document.getElementById('userEmail').textContent = email;
-    } else {
-      // If no email found, redirect to login
-      window.location.href = "wallet/index.html";
-    }
-  </script>
-</body>
+<body class="bg-gray-900 text-white">
+  <!-- Header -->
+  <header class="bg-blue-500 p-4 text-center text-xl font-bold">TubeEarn Admin Dashboard</header>  <!-- Horizontal Scrollable Icons -->  <div class="flex overflow-x-auto space-x-4 p-4 bg-gray-800 scrollbar-hide">
+    <div class="flex-shrink-0 bg-orange-400 p-3 rounded-xl text-center w-28">🎥<br>Shorts</div>
+    <div class="flex-shrink-0 bg-orange-400 p-3 rounded-xl text-center w-28">📺<br>Long Video</div>
+    <div class="flex-shrink-0 bg-orange-400 p-3 rounded-xl text-center w-28">💰<br>Wallet</div>
+    <div class="flex-shrink-0 bg-orange-400 p-3 rounded-xl text-center w-28">🎁<br>Gifts</div>
+    <div class="flex-shrink-0 bg-orange-400 p-3 rounded-xl text-center w-28">🎤<br>Singing</div>
+    <div class="flex-shrink-0 bg-orange-400 p-3 rounded-xl text-center w-28">👥<br>Dating</div>
+    <div class="flex-shrink-0 bg-orange-400 p-3 rounded-xl text-center w-28">📚<br>Billi Edu</div>
+    <div class="flex-shrink-0 bg-orange-400 p-3 rounded-xl text-center w-28">🎮<br>Gaming</div>
+    <div class="flex-shrink-0 bg-orange-400 p-3 rounded-xl text-center w-28">💼<br>Career</div>
+    <div class="flex-shrink-0 bg-orange-400 p-3 rounded-xl text-center w-28">📈<br>Analytics</div>
+  </div>  <!-- Default Balance Sheet -->  <section class="p-4">
+    <h2 class="text-lg font-bold mb-2">💵 Total Balance Sheet</h2>
+    <div class="grid grid-cols-2 gap-4">
+      <div class="bg-gray-800 p-4 rounded-lg shadow">Total Balance<br><span class="text-2xl text-green-400 font-bold">₹00.00</span></div>
+      <div class="bg-gray-800 p-4 rounded-lg shadow">Pending Amount<br><span class="text-xl">₹0</span></div>
+      <div class="bg-gray-800 p-4 rounded-lg shadow">Today Revenue<br><span class="text-xl">₹0</span></div>
+      <div class="bg-gray-800 p-4 rounded-lg shadow">Monthly Revenue<br><span class="text-xl">₹0</span></div>
+      <div class="bg-gray-800 p-4 rounded-lg shadow">Ads Revenue<br><span class="text-xl">₹0</span></div>
+      <div class="bg-gray-800 p-4 rounded-lg shadow">Profile Score<br><span class="text-xl">89%</span></div>
+    </div>
+  </section>  <!-- Example Section: Shorts Feature -->  <section class="p-4">
+    <h2 class="text-lg font-bold mb-2">🎥 Shorts Stats</h2>
+    <div class="grid grid-cols-2 gap-4">
+      <div class="bg-gray-800 p-4 rounded-lg shadow">Revenue<br><span class="text-xl">₹2,354</span></div>
+      <div class="bg-gray-800 p-4 rounded-lg shadow">Total Creators<br><span class="text-xl">1,245</span></div>
+      <div class="bg-gray-800 p-4 rounded-lg shadow">Total Channels<br><span class="text-xl">859</span></div>
+      <div class="bg-gray-800 p-4 rounded-lg shadow">All Shorts Videos<br><span class="text-xl">12,530</span></div>
+    </div>
+  </section></body>
 </html>
