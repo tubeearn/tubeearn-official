@@ -6,72 +6,59 @@
   <title>TubeEarn - Login</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
   <style>
-    * {
+    body {
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
       font-family: 'Poppins', sans-serif;
-    }
-
-    body {
       background: #f4f6f9;
       display: flex;
       justify-content: center;
       align-items: flex-start;
-      padding-top: 40px;
+      padding-top: 60px;
       min-height: 100vh;
     }
 
     .login-box {
-      background: #ffffff;
-      padding: 30px 30px 40px;
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
       width: 100%;
       max-width: 400px;
-      border-radius: 12px;
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
       text-align: center;
     }
 
     .login-box h1 {
-      font-size: 24px;
+      font-size: 22px;
       color: #1e88e5;
-      margin-bottom: 10px;
     }
 
     .login-box p {
+      margin-bottom: 20px;
       color: #555;
-      margin-bottom: 25px;
     }
 
     .login-box input {
       width: 100%;
-      padding: 12px 14px;
-      margin-bottom: 18px;
+      padding: 12px;
+      margin-bottom: 15px;
       border-radius: 8px;
       border: 1px solid #ccc;
-      font-size: 14px;
     }
 
     .login-box button {
       width: 100%;
       padding: 12px;
-      background: #1e88e5;
+      background-color: #1e88e5;
       color: white;
-      font-weight: bold;
       border: none;
       border-radius: 8px;
-      cursor: pointer;
       font-size: 16px;
+      cursor: pointer;
     }
 
     .login-box button:hover {
-      background: #1565c0;
-    }
-
-    .note {
-      font-size: 13px;
-      color: #999;
-      margin-top: 15px;
+      background-color: #1565c0;
     }
   </style>
 </head>
@@ -79,10 +66,9 @@
   <div class="login-box">
     <h1>Welcome to TubeEarn</h1>
     <p>Login to owner dashboard</p>
-    <input type="email" id="email" placeholder="Enter your email">
-    <input type="password" id="password" placeholder="Enter your password">
+    <input type="email" id="email" placeholder="Email" required />
+    <input type="password" id="password" placeholder="Password" required />
     <button onclick="login()">Login</button>
-    <p class="note">Only admin login allowed here</p>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
@@ -96,17 +82,21 @@
       const password = document.getElementById("password").value;
 
       if (!email || !password) {
-        alert("Please enter both email and password.");
+        alert("Please enter both email and password");
         return;
       }
 
-      const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+      try {
+        const { data, error } = await supabase.auth.signInWithPassword({ email, password });
 
-      if (error) {
-        alert("Login failed: " + error.message);
-      } else {
-        alert("Login successful!");
-        window.location.href = "dashboard.html"; // Redirect to dashboard
+        if (error) {
+          alert("Login failed: " + error.message);
+        } else {
+          alert("Login successful!");
+          window.location.href = "dashboard.html";
+        }
+      } catch (err) {
+        alert("Unexpected error: " + err.message);
       }
     }
   </script>
