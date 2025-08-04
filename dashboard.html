@@ -1,72 +1,103 @@
-<!-- /admin/adsense-panel.html --><!DOCTYPE html><html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Owner AdSense Control - TubeEarn</title>
-  <link rel="stylesheet" href="/styles/admin.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TubeEarn Owner Dashboard</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      background-color: #0f172a;
+      color: #fff;
+    }
+    .sidebar {
+      background-color: #1e293b;
+      height: 100vh;
+      padding-top: 1rem;
+    }
+    .sidebar a {
+      color: #cbd5e1;
+      text-decoration: none;
+      padding: 0.75rem 1rem;
+      display: block;
+    }
+    .sidebar a:hover {
+      background-color: #334155;
+    }
+    .header {
+      background-color: #1e293b;
+      padding: 1rem;
+      text-align: center;
+      font-weight: bold;
+    }
+    .main {
+      padding: 2rem;
+    }
+    .card {
+      background-color: #1e293b;
+      border: none;
+      color: #fff;
+      margin-bottom: 1rem;
+    }
+    .card-title {
+      font-size: 1.2rem;
+    }
+    .card-icon {
+      font-size: 2rem;
+      margin-right: 0.5rem;
+    }
+  </style>
 </head>
 <body>
-  <header>
-    <h1>TubeEarn Owner Panel - AdSense Control</h1>
-  </header>  <main>
-    <section class="user-adsense-list">
-      <table>
-        <thead>
-          <tr>
-            <th>User</th>
-            <th>AdSense ID</th>
-            <th>Subscribers</th>
-            <th>Watch Hours</th>
-            <th>Short Views</th>
-            <th>Eligible</th>
-            <th>Ads Enabled</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody id="adsense-users"></tbody>
-      </table>
-    </section>
-  </main>  <script type="module">
-    import { createClient } from 'https://esm.sh/@supabase/supabase-js';
+  <div class="container-fluid">
+    <div class="row">
+      <!-- Sidebar -->
+      <div class="col-md-3 sidebar">
+        <div class="header">TubeEarn Owner Panel</div>
+        <a href="#dashboard">📊 Dashboard</a>
+        <a href="#wallet">💼 Wallet Control</a>
+        <a href="#security">🔒 Security</a>
+        <a href="#users">👤 User Management</a>
+        <a href="#adsense">🎯 AdSense Control</a>
+        <a href="#video">🎥 Video Monetization</a>
+        <a href="#shorts">📱 Shorts Control</a>
+        <a href="#live">🔴 Live Performances</a>
+        <a href="#singing">🎤 Singing Panel</a>
+        <a href="#editing">✂️ Editing Features</a>
+        <a href="#duet">🤝 Duet Tools</a>
+        <a href="#party">🎉 Party Match</a>
+        <a href="#referral">📨 Referral System</a>
+        <a href="#career">💼 Career Section</a>
+        <a href="#education">📚 Raj Education System</a>
+        <a href="#settings">⚙️ Site Settings</a>
+      </div><!-- Main Content -->
+  <div class="col-md-9 main">
+    <h2 id="dashboard">📊 Dashboard Overview</h2>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="card p-3">
+          <div class="card-title">Total Users</div>
+          <div class="card-text">1,20,500</div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card p-3">
+          <div class="card-title">Active Subscriptions</div>
+          <div class="card-text">8,900</div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card p-3">
+          <div class="card-title">Videos Uploaded</div>
+          <div class="card-text">3,52,000</div>
+        </div>
+      </div>
+    </div>
+    <!-- More section UIs to be added here like Wallet, AdSense, etc -->
+    <p class="mt-5">👇 नीचे बताओ किस सेक्शन का डिटेल कोड सबसे पहले डालूं (AdSense Control, Shorts, Singing, Education, etc)?</p>
+  </div>
+</div>
 
-    const supabaseUrl = 'https://ejbvidirnsjvadvekede.supabase.co';
-    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVqYnZpZGlybnNqdmFkdmVrZWRlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTM2MTA3ODMsImV4cCI6MjA2OTE4Njc4M30.KoCt8f2bXjn3843XOsRMLwyZ0lKpARkrRqb_GXlGfUs';
-    const supabase = createClient(supabaseUrl, supabaseKey);
-
-    async function loadUsers() {
-      const { data: users, error } = await supabase.from('users').select('*');
-      const tbody = document.getElementById('adsense-users');
-      tbody.innerHTML = '';
-
-      for (let user of users) {
-        const eligible = (user.subscribers >= 500 && user.watch_hours >= 1000) || (user.subscribers >= 400 && user.short_views >= 20000);
-
-        const row = `
-          <tr>
-            <td>${user.username || 'No Name'}</td>
-            <td>${user.adsense_id || 'N/A'}</td>
-            <td>${user.subscribers || 0}</td>
-            <td>${user.watch_hours || 0}</td>
-            <td>${user.short_views || 0}</td>
-            <td>${eligible ? '✅' : '❌'}</td>
-            <td>${user.ads_enabled ? '🟢 On' : '🔴 Off'}</td>
-            <td>
-              <button onclick="toggleAds('${user.id}', ${!user.ads_enabled})">
-                ${user.ads_enabled ? 'Disable' : 'Enable'}
-              </button>
-            </td>
-          </tr>
-        `;
-
-        tbody.innerHTML += row;
-      }
-    }
-
-    async function toggleAds(userId, enable) {
-      await supabase.from('users').update({ ads_enabled: enable }).eq('id', userId);
-      loadUsers();
-    }
-
-    loadUsers();
-  </script></body>
+  </div>
+</body>
 </html>
