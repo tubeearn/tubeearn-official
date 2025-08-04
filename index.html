@@ -3,56 +3,43 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>TubeEarn - Owner Login</title>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <title>TubeEarn Login</title>
+  <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: linear-gradient(to right, #1e3c72, #2a5298);
+      background: linear-gradient(to right, #141e30, #243b55);
       color: #fff;
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
       height: 100vh;
       margin: 0;
     }
     .login-box {
-      background: #ffffff10;
+      background: rgba(255,255,255,0.1);
       padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 0 15px #00000050;
-      width: 100%;
-      max-width: 400px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.5);
+      width: 300px;
       text-align: center;
     }
-    input {
+    input, button {
       width: 100%;
       padding: 12px;
       margin: 10px 0;
+      border-radius: 5px;
       border: none;
-      border-radius: 6px;
       font-size: 16px;
     }
     button {
-      padding: 12px 20px;
-      border: none;
-      border-radius: 6px;
-      background: #fff;
-      color: #2a5298;
+      background: #00c6ff;
+      color: #000;
       font-weight: bold;
       cursor: pointer;
-      width: 100%;
-      font-size: 16px;
     }
-    button:hover {
-      background: #f0f0f0;
-    }
-    h1 {
-      margin-bottom: 10px;
-    }
-    .message {
-      margin-top: 15px;
+    #message {
+      margin-top: 10px;
       font-size: 14px;
       color: lightgreen;
     }
@@ -60,12 +47,11 @@
 </head>
 <body>
   <div class="login-box">
-    <h1>Welcome to TubeEarn</h1>
-    <p>Login to owner dashboard</p>
+    <h2>TubeEarn Login</h2>
     <input type="email" id="email" placeholder="Enter Email" value="tubeearn.help@gmail.com" />
     <input type="password" id="password" placeholder="Enter Password" value="Sanjeev95@" />
-    <button onclick="login()">Login</button></a>
-    <div class="message" id="msg"></div>
+    <button id="login-btn">Login</button>
+    <div id="message"></div>
   </div>
 
   <script>
@@ -74,20 +60,24 @@
       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVqYnZpZGlybnNqdmFkdmVrZWRlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTM2MTA3ODMsImV4cCI6MjA2OTE4Njc4M30.KoCt8f2bXjn3843XOsRMLwyZ0lKpARkrRqb_GXlGfUs"
     );
 
-    async function login() {
+    document.getElementById("login-btn").addEventListener("click", async () => {
       const email = document.getElementById("email").value;
       const password = document.getElementById("password").value;
       const { data, error } = await supabase.auth.signInWithPassword({ email, password });
 
+      const msg = document.getElementById("message");
+
       if (error) {
-        document.getElementById("msg").innerText = "❌ Login failed: " + error.message;
+        msg.innerText = "❌ Login failed: " + error.message;
+        msg.style.color = "red";
       } else {
-        document.getElementById("msg").innerText = "✅ Login successful! Redirecting...";
+        msg.innerText = "✅ Login successful! Redirecting...";
+        msg.style.color = "lightgreen";
         setTimeout(() => {
-          window.location.href = "/dashboard.html"; // Change this to your actual dashboard page
+          window.location.href = "dashboard.html"; // Change to your dashboard path
         }, 1000);
       }
-    }
+    });
   </script>
 </body>
 </html>
