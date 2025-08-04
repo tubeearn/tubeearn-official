@@ -1,6 +1,4 @@
-<!-- dashboard.html -->
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -8,110 +6,133 @@
   <style>
     body {
       margin: 0;
-      font-family: 'Segoe UI', cursive;
+      font-family: 'Segoe UI', sans-serif;
       background-color: #f4f4f4;
-    }
+    }/* Top Bar */
+.top-bar {
+  background-color: #0099ff;
+  color: white;
+  padding: 15px;
+  text-align: center;
+  font-size: 22px;
+  font-weight: bold;
+}
 
-    /* Top Bar */
-    .top-bar {
-      background-color: #0099ff;
-      color: white;
-      padding: 15px;
-      text-align: center;
-      font-size: 22px;
-      font-weight: bold;
-    }
+/* Balance */
+.balance-box {
+  margin: 20px auto;
+  max-width: 90%;
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  font-size: 20px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  color: #333;
+}
 
-    /* Balance */
-    .balance-box {
-      margin: 20px auto;
-      max-width: 90%;
-      background: white;
-      padding: 20px;
-      border-radius: 12px;
-      text-align: center;
-      font-size: 20px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      color: #333;
-    }
+/* Icon Menu */
+.icon-bar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+  margin: 20px;
+}
 
-    /* Icon Menu */
-    .icon-bar {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 15px;
-      margin: 20px;
-    }
+.icon {
+  background-color: #003366;
+  padding: 15px 25px;
+  border-radius: 10px;
+  text-align: center;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  min-width: 120px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
 
-    .icon {
-      background-color: #FFA500;
-      padding: 15px 25px;
-      border-radius: 10px;
-      text-align: center;
-      color: white;
-      font-weight: bold;
-      font-style: italic;
-      cursor: pointer;
-      min-width: 120px;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    }
+.icon:hover {
+  background-color: #002244;
+}
 
-    .icon:hover {
-      background-color: #e69500;
-    }
+/* Data Section */
+.data-section {
+  background: white;
+  margin: 20px;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  min-height: 150px;
+  font-size: 16px;
+  color: #222;
+}
 
-    /* Data Section */
-    .data-section {
-      background: white;
-      margin: 20px;
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      min-height: 150px;
-      font-size: 16px;
-      color: #222;
-    }
+.sub-balances {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 15px;
+  padding: 10px;
+  text-align: center;
+  font-weight: bold;
+}
+.sub-balances div {
+  background: #e6f0ff;
+  border-radius: 10px;
+  padding: 10px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
   </style>
 </head>
-<body>
-
-  <div class="top-bar">TubeEarn Dashboard</div>
-
-  <div class="balance-box">
+<body>  <div class="top-bar">TubeEarn Dashboard</div>  <div class="balance-box">
     💰 Total Balance: ₹12,550.00
-  </div>
-
-  <div class="icon-bar">
+    <div class="sub-balances">
+      <div>Pending: ₹3,200</div>
+      <div>Profile Score: 87%</div>
+      <div>Monthly Rev: ₹8,000</div>
+      <div>Daily Rev: ₹400</div>
+      <div>Paid Rev: ₹5,300</div>
+      <div>Ads Rev: ₹2,700</div>
+    </div>
+  </div>  <div class="icon-bar">
     <div class="icon" onclick="showData('wallet')">Wallet</div>
-    <div class="icon" onclick="showData('shorts')">Short Videos</div>
-    <div class="icon" onclick="showData('live')">Live Performance</div>
-    <div class="icon" onclick="showData('education')">Billi Education</div>
+    <div class="icon" onclick="showData('shorts')">Shorts</div>
+    <div class="icon" onclick="showData('live')">Live</div>
+    <div class="icon" onclick="showData('education')">Education</div>
     <div class="icon" onclick="showData('career')">Career</div>
-    <div class="icon" onclick="showData('match')">Matching</div>
-    <div class="icon" onclick="showData('gift')">Virtual Gifts</div>
+    <div class="icon" onclick="showData('match')">Dating</div>
+    <div class="icon" onclick="showData('gift')">Virtual Gift</div>
     <div class="icon" onclick="showData('analytics')">Analytics</div>
-  </div>
-
-  <div class="data-section" id="dataBox">
+    <div class="icon" onclick="showData('shopping')">Shopping</div>
+    <div class="icon" onclick="showData('gaming')">Gaming</div>
+    <div class="icon" onclick="showData('creator')">Creator</div>
+    <div class="icon" onclick="showData('face')">Face Swap</div>
+    <div class="icon" onclick="showData('video')">Video Editor</div>
+    <div class="icon" onclick="showData('audio')">Audio Editor</div>
+    <div class="icon" onclick="showData('monetize')">Monetize</div>
+  </div>  <div class="data-section" id="dataBox">
     👈 किसी भी फीचर पर क्लिक करें डेटा देखने के लिए।
-  </div>
-
-  <script>
+  </div>  <script>
     function showData(feature) {
       const data = {
-        wallet: "🔐 Your current wallet is active with UPI, PayPal, BTC, and Pi Wallet. Withdraw available.",
-        shorts: "📱 Upload short videos with music, filters, duets, and earn views + followers.",
-        live: "🎥 Perform live and earn virtual gifts. 20% commission will go to admin.",
-        education: "📚 Billi Education system AI-controlled, offering all class content and syllabus worldwide.",
-        career: "🧑‍💼 Post jobs or apply directly. Admin controls selection process.",
-        match: "❤️ Matching system enabled. Welcome messages + video party enabled.",
-        gift: "🎁 Free gifts available to send in live video. Real-time earnings tracked.",
-        analytics: "📊 AI-based performance and monetization eligibility data visible here."
+        wallet: "🔐 UPI, PayPal, BTC, Pi Wallet linked. Withdraw enabled.",
+        shorts: "📱 Upload short videos with filters, music & earn.",
+        live: "🎥 Go live, earn from gifts. Admin 20% commission.",
+        education: "📚 Billi Education AI system active for all boards.",
+        career: "💼 Post & apply for jobs. Admin review active.",
+        match: "❤️ Dating/match system with party video enabled.",
+        gift: "🎁 Send virtual gifts in live. Balance updates live.",
+        analytics: "📊 AI performance & monetization details.",
+        shopping: "🛒 Shop products and earn cashback.",
+        gaming: "🎮 Play & earn coins from popular games.",
+        creator: "🎬 Create videos, get followers & revenue.",
+        face: "🧑‍🤝‍🧑 Use face swap tools with auto detection.",
+        video: "🎞️ Trim, edit, transition video editor tools.",
+        audio: "🎧 Audio mix, auto tune, background filters.",
+        monetize: "💰 Connect AdSense or brand deals to earn."
       };
       document.getElementById("dataBox").innerText = data[feature] || "No data available.";
     }
-  </script>
-
-</body>
+  </script></body>
 </html>
