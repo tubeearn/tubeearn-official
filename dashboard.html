@@ -1,19 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>TubeEarn Owner Dashboard</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TubeEarn Dashboard</title>
   <style>
     body {
-      background: #111;
-      color: #fff;
-      font-family: Arial;
-      padding: 20px;
+      font-family: Arial, sans-serif;
+      padding: 2rem;
+      background: #f0f2f5;
+    }
+    .dashboard {
+      max-width: 600px;
+      margin: auto;
+      background: #fff;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    h1 {
+      color: #333;
+    }
+    .email {
+      font-weight: bold;
+      color: #1a73e8;
     }
   </style>
 </head>
 <body>
-  <h1>🎬 Welcome to TubeEarn Admin Dashboard</h1>
-  <p>You are logged in as <strong>tubeearn.help@gmail.com</strong></p>
+  <div class="dashboard">
+    <h1>Welcome to TubeEarn Dashboard</h1>
+    <p>Logged in as: <span class="email" id="userEmail">Loading...</span></p>
+  </div>
+
+  <script>
+    // Get email from localStorage (set during login)
+    const email = localStorage.getItem('userEmail');
+
+    // Show email if found
+    if (email) {
+      document.getElementById('userEmail').textContent = email;
+    } else {
+      // If no email found, redirect to login
+      window.location.href = "index.html";
+    }
+  </script>
 </body>
 </html>
