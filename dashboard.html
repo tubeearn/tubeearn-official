@@ -1,112 +1,152 @@
 <!DOCTYPE html><html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Owner Dashboard - TubeEarn</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TubeEarn - Owner Dashboard</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
   <style>
     body {
-      background-color: #f8f9fa;
+      background: #f5f6fa;
+      font-family: 'Segoe UI', sans-serif;
     }
-    .top-feature-bar {
+    .top-nav {
+      white-space: nowrap;
       overflow-x: auto;
-      white-space: nowrap;
+      background: #fff;
       padding: 10px;
-      background-color: #fff;
-      border-bottom: 1px solid #dee2e6;
+      border-bottom: 1px solid #ddd;
     }
-    .top-feature-bar button {
+    .top-nav .nav-item {
       display: inline-block;
-      margin-right: 10px;
-      white-space: nowrap;
+      margin-right: 15px;
+      text-align: center;
+      min-width: 80px;
     }
-    .section-card {
-      margin: 20px;
-      border-radius: 15px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    .top-nav .nav-link {
+      color: #333;
+      font-size: 14px;
+    }
+    .nav-link i {
+      display: block;
+      font-size: 20px;
+      margin-bottom: 4px;
+    }
+    .section {
+      display: none;
+      padding: 20px;
+    }
+    .active-section {
+      display: block;
     }
     .bottom-nav {
       position: fixed;
       bottom: 0;
       width: 100%;
       background: #fff;
-      box-shadow: 0 -2px 6px rgba(0,0,0,0.1);
+      border-top: 1px solid #ccc;
       display: flex;
       justify-content: space-around;
-      padding: 10px 0;
+      padding: 5px 0;
     }
     .bottom-nav a {
+      color: #444;
+      font-size: 14px;
       text-align: center;
-      font-size: 12px;
-      text-decoration: none;
-      color: #333;
     }
-    .bottom-nav a:hover {
-      color: #0d6efd;
+    .bottom-nav i {
+      display: block;
+      font-size: 18px;
     }
   </style>
 </head>
-<body>  <!-- Top Feature Bar -->  <div class="top-feature-bar">
-    <button class="btn btn-outline-primary">Wallet</button>
-    <button class="btn btn-outline-primary">Settings</button>
-    <button class="btn btn-outline-primary">Security</button>
-    <button class="btn btn-outline-primary">Adsense</button>
-    <button class="btn btn-outline-primary">Switch Storage</button>
-    <button class="btn btn-outline-primary">Analytics</button>
-    <button class="btn btn-outline-primary">Moderation</button>
-    <button class="btn btn-outline-primary">Live Stream</button>
-    <button class="btn btn-outline-primary">Users</button>
-    <button class="btn btn-outline-primary">Shorts/Longs</button>
-  </div>  <!-- Dashboard Sections -->  <div class="container">
-    <div class="card section-card">
-      <div class="card-body">
-        <h5 class="card-title">Wallet Management</h5>
-        <p class="card-text">Transactions, commissions, and subfolders created: <code>/wallet/transactions</code>, <code>/wallet/settings</code></p>
-      </div>
-    </div><div class="card section-card">
-  <div class="card-body">
-    <h5 class="card-title">Settings</h5>
-    <p class="card-text">Subfolders: general, UI control, feature toggles (voice/video, beauty, referral)</p>
+<body>  <!-- Top Horizontal Nav -->  <div class="top-nav d-flex">
+    <div class="nav-item">
+      <a href="#" class="nav-link" onclick="showSection('wallet')">
+        <i class="bi bi-wallet2"></i>
+        Wallet
+      </a>
+    </div>
+    <div class="nav-item">
+      <a href="#" class="nav-link" onclick="showSection('adsense')">
+        <i class="bi bi-megaphone"></i>
+        AdSense
+      </a>
+    </div>
+    <div class="nav-item">
+      <a href="#" class="nav-link" onclick="showSection('security')">
+        <i class="bi bi-shield-lock"></i>
+        Security
+      </a>
+    </div>
+    <div class="nav-item">
+      <a href="#" class="nav-link" onclick="showSection('firebase')">
+        <i class="bi bi-cloud-arrow-up"></i>
+        Firebase
+      </a>
+    </div>
+    <div class="nav-item">
+      <a href="#" class="nav-link" onclick="showSection('supabase')">
+        <i class="bi bi-database"></i>
+        Supabase
+      </a>
+    </div>
+    <div class="nav-item">
+      <a href="#" class="nav-link" onclick="showSection('settings')">
+        <i class="bi bi-gear"></i>
+        Settings
+      </a>
+    </div>
+  </div>  <!-- Sections -->  <div class="section active-section" id="wallet">
+    <h4>Wallet Control</h4>
+    <p>Check balances, toggle withdrawals, and view transactions here.</p>
   </div>
-</div>
-
-<div class="card section-card">
-  <div class="card-body">
-    <h5 class="card-title">Adsense Integration</h5>
-    <p class="card-text">Connect publisher ID, enable/disable ads by section: live, shorts, videos, games, editing, etc.<br>
-    Subfolder: <code>/adsense/config</code></p>
+  <div class="section" id="adsense">
+    <h4>AdSense Configuration</h4>
+    <p>Manage where ads should appear: Live, Gaming, Editing, Shorts, Facebook, etc.</p>
   </div>
-</div>
-
-<div class="card section-card">
-  <div class="card-body">
-    <h5 class="card-title">Security</h5>
-    <p class="card-text">Moderation, content approval AI, NSFW filters. Subfolder: <code>/security/policies</code></p>
+  <div class="section" id="security">
+    <h4>Security Center</h4>
+    <p>Manage access, encryption settings, and protect data.</p>
   </div>
-</div>
-
-<div class="card section-card">
-  <div class="card-body">
-    <h5 class="card-title">Switch Storage (Supabase / Firebase)</h5>
-    <p class="card-text">You can switch your backend from Supabase to Firebase from here.<br>Subfolder: <code>/storage/switch</code></p>
+  <div class="section" id="firebase">
+    <h4>Firebase Integration</h4>
+    <p>Control your Firebase backend, analytics, and push services.</p>
   </div>
-</div>
-
-  </div>  <!-- Bottom Navigation -->  <div class="bottom-nav">
-    <a href="#">
-      <div>🏠<br>Home</div>
+  <div class="section" id="supabase">
+    <h4>Supabase Integration</h4>
+    <p>Connect or switch data source to Supabase. Toggle real-time DB here.</p>
+  </div>
+  <div class="section" id="settings">
+    <h4>Admin Settings</h4>
+    <p>Manage site title, default country settings, plan prices, and more.</p>
+  </div>  <!-- Bottom Nav -->  <div class="bottom-nav">
+    <a href="#" onclick="showSection('wallet')">
+      <i class="bi bi-speedometer2"></i>
+      Dashboard
     </a>
-    <a href="#">
-      <div>📊<br>Stats</div>
+    <a href="#" onclick="showSection('adsense')">
+      <i class="bi bi-megaphone"></i>
+      Ads
     </a>
-    <a href="#">
-      <div>🧾<br>Wallet</div>
+    <a href="#" onclick="showSection('settings')">
+      <i class="bi bi-tools"></i>
+      Tools
     </a>
-    <a href="#">
-      <div>⚙️<br>Settings</div>
+    <a href="#" onclick="showSection('security')">
+      <i class="bi bi-shield-lock"></i>
+      Security
     </a>
-    <a href="#">
-      <div>📁<br>Folders</div>
+    <a href="#" onclick="showSection('firebase')">
+      <i class="bi bi-cloud"></i>
+      DB
     </a>
-  </div></body>
+  </div>  <script>
+    function showSection(id) {
+      document.querySelectorAll('.section').forEach(section => {
+        section.classList.remove('active-section');
+      });
+      document.getElementById(id).classList.add('active-section');
+    }
+  </script></body>
 </html>
