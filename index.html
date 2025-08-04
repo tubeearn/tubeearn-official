@@ -1,109 +1,160 @@
 <!DOCTYPE html><html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TubeEarn Admin Login</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TubeEarn Dashboard</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     body {
-      background-color: #f8f9fa;
+      background: #f4f6f9;
+      font-family: 'Segoe UI', sans-serif;
     }
-    .login-container {
-      max-width: 400px;
-      margin: 80px auto;
-      background: #fff;
-      padding: 30px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      border-radius: 10px;
+    .sidebar {
+      width: 250px;
+      height: 100vh;
+      background: #1e1e2f;
+      position: fixed;
+      color: white;
     }
-    .dashboard {
-      padding: 20px;
+    .sidebar h2 {
+      text-align: center;
+      padding: 1rem;
+      background: #111123;
     }
-    .nav-item:hover {
-      background-color: #f1f1f1;
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+    }
+    .sidebar ul li {
+      padding: 15px;
+      border-bottom: 1px solid #2a2a3f;
       cursor: pointer;
     }
+    .sidebar ul li:hover {
+      background: #313150;
+    }
+    .content {
+      margin-left: 250px;
+      padding: 2rem;
+    }
     .card {
-      border-radius: 15px;
+      border: none;
+      border-radius: 1rem;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .wallet {
+      background: #2f80ed;
+      color: white;
+    }
+    .wallet .btn {
+      background: white;
+      color: #2f80ed;
     }
   </style>
 </head>
 <body>
-  <div id="loginPage" class="login-container">
-    <h3 class="text-center mb-4">TubeEarn Admin Login</h3>
-    <div class="mb-3">
-      <label for="email" class="form-label">Email</label>
-      <input type="email" class="form-control" id="email">
-    </div>
-    <div class="mb-3">
-      <label for="password" class="form-label">Password</label>
-      <input type="password" class="form-control" id="password">
-    </div>
-    <button class="btn btn-primary w-100" onclick="loginAdmin()">Login</button>
-  </div>  <div id="dashboardPage" style="display: none;">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="#">TubeEarn Admin</a>
-        <button class="btn btn-outline-light" onclick="logout()">Logout</button>
-      </div>
-    </nav>
-    <div class="container dashboard">
-      <div class="row">
-        <div class="col-md-3">
-          <ul class="list-group">
-            <li class="list-group-item nav-item">Dashboard</li>
-            <li class="list-group-item nav-item">User Management</li>
-            <li class="list-group-item nav-item">Earnings Report</li>
-            <li class="list-group-item nav-item">Videos Control</li>
-            <li class="list-group-item nav-item">Withdraw Requests</li>
-            <li class="list-group-item nav-item">Settings</li>
-          </ul>
-        </div>
-        <div class="col-md-9">
-          <div class="row">
-            <div class="col-md-6 mb-3">
-              <div class="card bg-light p-3">
-                <h5>Total Users</h5>
-                <p class="fs-4">2,341</p>
-              </div>
-            </div>
-            <div class="col-md-6 mb-3">
-              <div class="card bg-light p-3">
-                <h5>Today's Revenue</h5>
-                <p class="fs-4">₹12,300</p>
-              </div>
-            </div>
-            <div class="col-md-6 mb-3">
-              <div class="card bg-light p-3">
-                <h5>Pending Withdrawals</h5>
-                <p class="fs-4">₹8,150</p>
-              </div>
-            </div>
-            <div class="col-md-6 mb-3">
-              <div class="card bg-light p-3">
-                <h5>Active Performers</h5>
-                <p class="fs-4">91</p>
-              </div>
-            </div>
-          </div>
+  <div class="sidebar">
+    <h2>TubeEarn</h2>
+    <ul>
+      <li><i class="fas fa-home me-2"></i> Home</li>
+      <li><i class="fas fa-user me-2"></i> Creator</li>
+      <li><i class="fas fa-shopping-cart me-2"></i> Shopping</li>
+      <li><i class="fas fa-graduation-cap me-2"></i> Education</li>
+      <li><i class="fas fa-microphone me-2"></i> Singing</li>
+      <li><i class="fas fa-heart me-2"></i> Dating</li>
+      <li><i class="fas fa-gamepad me-2"></i> Gaming</li>
+      <li><i class="fas fa-broadcast-tower me-2"></i> Live</li>
+      <li><i class="fas fa-user-secret me-2"></i> Face Swap</li>
+      <li><i class="fas fa-video me-2"></i> Video Editor</li>
+      <li><i class="fas fa-music me-2"></i> Audio Editor</li>
+      <li><i class="fas fa-briefcase me-2"></i> Career</li>
+      <li><i class="fas fa-wallet me-2"></i> Wallet</li>
+      <li><i class="fas fa-money-bill me-2"></i> Monetize</li>
+    </ul>
+  </div>  <div class="content">
+    <div class="row mb-4">
+      <div class="col-md-3">
+        <div class="card p-3 text-center">
+          <h5>Total Users</h5>
+          <h2>12,450</h2>
         </div>
       </div>
+      <div class="col-md-3">
+        <div class="card p-3 text-center">
+          <h5>Total Earnings</h5>
+          <h2>₹2,85,000</h2>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card p-3 text-center">
+          <h5>Uploads</h5>
+          <h2>7,130</h2>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card p-3 text-center">
+          <h5>Flagged</h5>
+          <h2>34</h2>
+        </div>
+      </div>
+    </div><div class="row mb-4">
+  <div class="col-md-6">
+    <div class="card wallet p-4">
+      <h4>Wallet Balance: ₹8,400</h4>
+      <p>Last Transaction: ₹500 received</p>
+      <button class="btn btn-light mt-3">Withdraw</button>
     </div>
-  </div>  <script>
-    function loginAdmin() {
-      const email = document.getElementById("email").value;
-      const password = document.getElementById("password").value;
+  </div>
+  <div class="col-md-6">
+    <div class="card p-4">
+      <h5>Live Users</h5>
+      <ul>
+        <li>Raj 🔴</li>
+        <li>Anjali 🟢</li>
+        <li>Ravi 🔴</li>
+      </ul>
+    </div>
+  </div>
+</div>
 
-      if (email === "tubeearn.help@gmail.com" && password === "Sanjeev95@") {
-        document.getElementById("loginPage").style.display = "none";
-        document.getElementById("dashboardPage").style.display = "block";
-      } else {
-        alert("Invalid credentials");
-      }
-    }
+<div class="card p-4">
+  <h5>Recent Users</h5>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Status</th>
+        <th>Role</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Rohit Kumar</td>
+        <td>rohit@gmail.com</td>
+        <td><span class="badge bg-success">Active</span></td>
+        <td>Creator</td>
+      </tr>
+      <tr>
+        <td>Sneha Singh</td>
+        <td>sneha@gmail.com</td>
+        <td><span class="badge bg-danger">Banned</span></td>
+        <td>Viewer</td>
+      </tr>
+      <tr>
+        <td>Ankit Das</td>
+        <td>ankit@gmail.com</td>
+        <td><span class="badge bg-warning">Pending</span></td>
+        <td>Performer</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
-    function logout() {
-      document.getElementById("dashboardPage").style.display = "none";
+  </div>
+</body>
+</html>      document.getElementById("dashboardPage").style.display = "none";
       document.getElementById("loginPage").style.display = "block";
     }
   </script></body>
