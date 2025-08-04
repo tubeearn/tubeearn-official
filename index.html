@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>TubeEarn Login</title>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -10,7 +10,9 @@
     body {
       background: linear-gradient(to right, #667eea, #764ba2);
       min-height: 100vh;
-      display: flex; align-items: center; justify-content: center;
+      display: flex;
+      justify-content: center;
+      padding-top: 60px;
     }
     .login-box {
       background: white;
@@ -56,9 +58,10 @@
 <body>
 
 <div class="login-box">
-  <h2>TubeEarn Owner Login</h2>
-  <input type="email" id="email" placeholder="Email" value="tubeearn.help@gmail.com" />
-  <input type="password" id="password" placeholder="Password" value="Sanjeev95@" />
+  <h2>TubeEarn Admin Login</h2>
+
+  <input type="email" id="email" placeholder="Email" />
+  <input type="password" id="password" placeholder="Password" />
   <button onclick="login()">Login</button>
 
   <div class="link">
@@ -66,9 +69,11 @@
   </div>
 
   <div class="section">
-    <h4>Change Email</h4>
-    <input type="email" id="newEmail" placeholder="New Email Address" />
-    <button onclick="changeEmail()">Update Email</button>
+    <h4>Change Email (Secure)</h4>
+    <input type="email" id="currentEmail" placeholder="Current Email" />
+    <input type="password" id="currentPassword" placeholder="Password" />
+    <input type="email" id="newEmail" placeholder="New Email" />
+    <button onclick="secureEmailChange()">Update Email</button>
   </div>
 </div>
 
@@ -91,12 +96,17 @@
       alert("Login Failed: " + error.message);
     } else {
       alert("Login Success ✅");
-      window.location.href = "dashboard.html"; // redirect after login
+      window.location.href = "dashboard.html";
     }
   }
 
   async function forgotPassword() {
     const email = document.getElementById('email').value;
+    if (!email) {
+      alert("Please enter your email.");
+      return;
+    }
+
     const { data, error } = await supabase.auth.resetPasswordForEmail(email);
     if (error) {
       alert("Error: " + error.message);
@@ -105,21 +115,29 @@
     }
   }
 
-  async function changeEmail() {
+  async function secureEmailChange() {
+    const currentEmail = document.getElementById('currentEmail').value;
+    const currentPassword = document.getElementById('currentPassword').value;
     const newEmail = document.getElementById('newEmail').value;
-    const { data: { session }, error: sessionError } = await supabase.auth.getSession();
-    
-    if (sessionError || !session) {
-      alert("You must be logged in to change email.");
+
+    const { data: loginData, error: loginError } = await supabase.auth.signInWithPassword({
+      email: currentEmail,
+      password: currentPassword
+    });
+
+    if (loginError) {
+      alert("Re-authentication failed: " + loginError.message);
       return;
     }
 
-    const { error } = await supabase.auth.updateUser({ email: newEmail });
+    const { error: updateError } = await supabase.auth.updateUser({
+      email: newEmail
+    });
 
-    if (error) {
-      alert("Email change failed: " + error.message);
+    if (updateError) {
+      alert("Email change failed: " + updateError.message);
     } else {
-      alert("Email update request sent. Check your inbox to confirm.");
+      alert("Email update requested. Please confirm it from your new email inbox.");
     }
   }
 </script>
