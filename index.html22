@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TubeEarn Admin Panel</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f1f1f1;
+      margin: 0;
+      padding: 20px;
+    }
+    .container {
+      max-width: 400px;
+      background: white;
+      margin: auto;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #ccc;
+    }
+    h2 {
+      text-align: center;
+    }
+    input, button {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border-radius: 5px;
+      border: 1px solid #aaa;
+    }
+    button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+    }
+    .hidden {
+      display: none;
+    }
+    .dashboard {
+      text-align: center;
+    }
+    img {
+      width: 100%;
+      border-radius: 10px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container" id="loginBox">
+    <h2>TubeEarn Owner Login</h2>
+    <input type="email" id="email" placeholder="Owner Email" />
+    <input type="password" id="password" placeholder="Password" />
+    <button onclick="login()">Login</button>
+  </div>
+
+  <div class="container hidden" id="dashboardBox">
+    <div class="dashboard">
+      <h2>Welcome, TubeEarn Owner</h2>
+      <button onclick="logout()">Logout</button>
+
+      <h3 style="margin-top: 20px;">Change Owner Credentials</h3>
+      <input type="email" id="newEmail" placeholder="New Email" />
+      <input type="password" id="newPassword" placeholder="New Password" />
+      <button onclick="changeCredentials()">Update Credentials</button>
+
+      <h3 style="margin-top: 20px;">Admin Panel Preview</h3>
+      <img src="https://via.placeholder.com/350x150?text=Dashboard+Image+1" alt="Dashboard Image 1">
+      <img src="https://via.placeholder.com/350x150?text=Dashboard+Image+2" alt="Dashboard Image 2">
+    </div>
+  </div>
+
+  <script>
+    const storedEmail = localStorage.getItem("ownerEmail") || "tubeEarn.help@gmail.com";
+    const storedPassword = localStorage.getItem("ownerPassword") || "Sanjeev95@";
+
+    function login() {
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+
+      if (email === storedEmail && password === storedPassword) {
+        document.getElementById("loginBox").classList.add("hidden");
+        document.getElementById("dashboardBox").classList.remove("hidden");
+      } else {
+        alert("Invalid Credentials");
+      }
+    }
+
+    function logout() {
+      document.getElementById("loginBox").classList.remove("hidden");
+      document.getElementById("dashboardBox").classList.add("hidden");
+    }
+
+    function changeCredentials() {
+      const newEmail = document.getElementById("newEmail").value;
+      const newPassword = document.getElementById("newPassword").value;
+
+      if (newEmail && newPassword) {
+        localStorage.setItem("ownerEmail", newEmail);
+        localStorage.setItem("ownerPassword", newPassword);
+        alert("Credentials updated! Please login again.");
+        logout();
+      } else {
+        alert("Enter both new email and password.");
+      }
+    }
+  </script>
+
+</body>
+</html>
