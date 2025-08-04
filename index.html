@@ -1,126 +1,94 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TubeEarn Owner Dashboard</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TubeEarn - Login</title>
   <style>
     body {
-      background: #f8f9fa;
+      margin: 0;
+      padding: 0;
+      background: #f0f8ff;
       font-family: 'Segoe UI', sans-serif;
     }
-    .card {
-      border: none;
-      border-radius: 15px;
-      box-shadow: 0 0 12px rgba(0,0,0,0.1);
+    .login-box {
+      width: 90%;
+      max-width: 400px;
+      margin: 100px auto;
+      padding: 30px;
+      background: white;
+      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+      border-radius: 10px;
     }
-    .section-title {
-      font-weight: 600;
-      font-size: 1.2rem;
-      margin-top: 30px;
+    h2 {
+      text-align: center;
+      color: #007bff;
+      margin-bottom: 30px;
     }
-    .navbar {
-      background-color: #343a40;
+    input {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border-radius: 8px;
+      border: 1px solid #ccc;
     }
-    .navbar-brand {
-      color: #fff;
+    .toggle-password {
+      float: right;
+      margin-top: -35px;
+      margin-right: 10px;
+      cursor: pointer;
+      color: #555;
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #007bff;
+      color: white;
       font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
     }
-    .card-title {
-      font-size: 1.1rem;
-      font-weight: 500;
+    button:hover {
+      background-color: #0056b3;
+    }
+    .error {
+      color: red;
+      text-align: center;
+      font-size: 14px;
+      margin-top: 10px;
     }
   </style>
 </head>
 <body>
-
-  <nav class="navbar navbar-dark px-3">
-    <a class="navbar-brand" href="#">TubeEarn Admin</a>
-  </nav>
-
-  <div class="container mt-4">
-
-    <div class="row g-3">
-      <!-- Wallet Balance -->
-      <div class="col-md-4">
-        <div class="card p-3">
-          <h5 class="card-title">Wallet Balance</h5>
-          <p class="text-success fs-4">₹12,540.00</p>
-        </div>
-      </div>
-
-      <!-- Gifts Received -->
-      <div class="col-md-4">
-        <div class="card p-3">
-          <h5 class="card-title">Virtual Gifts</h5>
-          <p class="text-primary fs-4">1,824 Gifts</p>
-        </div>
-      </div>
-
-      <!-- Shorts Uploaded -->
-      <div class="col-md-4">
-        <div class="card p-3">
-          <h5 class="card-title">Short Videos</h5>
-          <p class="text-info fs-4">325 Shorts</p>
-        </div>
-      </div>
-
-      <!-- Subscribers -->
-      <div class="col-md-4">
-        <div class="card p-3">
-          <h5 class="card-title">Subscribers</h5>
-          <p class="text-dark fs-4">50,284</p>
-        </div>
-      </div>
-
-      <!-- Live Performers -->
-      <div class="col-md-4">
-        <div class="card p-3">
-          <h5 class="card-title">Live Performers</h5>
-          <p class="text-warning fs-4">187 Online</p>
-        </div>
-      </div>
-
-      <!-- Teachers (Education) -->
-      <div class="col-md-4">
-        <div class="card p-3">
-          <h5 class="card-title">Raj Education System</h5>
-          <p class="text-secondary fs-4">52 Teachers</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Controls & History -->
-    <div class="section-title">Admin Controls</div>
-    <div class="row g-3">
-      <div class="col-md-6">
-        <div class="card p-3">
-          <h5 class="card-title">Monetization Requests</h5>
-          <button class="btn btn-success w-100">View Requests</button>
-        </div>
-      </div>
-
-      <div class="col-md-6">
-        <div class="card p-3">
-          <h5 class="card-title">Payment Withdrawals</h5>
-          <button class="btn btn-warning w-100">Check Transactions</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- History Logs -->
-    <div class="section-title">Recent Activity</div>
-    <div class="card mt-2 p-3">
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item">User A earned ₹350 from ads</li>
-        <li class="list-group-item">User B uploaded 3 new shorts</li>
-        <li class="list-group-item">User C received 5 gifts</li>
-        <li class="list-group-item">Teacher X approved for Education System</li>
-      </ul>
-    </div>
-
+  <div class="login-box">
+    <h2>TubeEarn Login</h2>
+    <input type="email" id="email" placeholder="Email">
+    <input type="password" id="password" placeholder="Password">
+    <span class="toggle-password" onclick="togglePassword()">👁️</span>
+    <button onclick="login()">Login</button>
+    <div class="error" id="errorMsg"></div>
   </div>
 
+  <script>
+    const togglePassword = () => {
+      const pass = document.getElementById('password');
+      pass.type = pass.type === 'password' ? 'text' : 'password';
+    };
+
+    function login() {
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+      const errorMsg = document.getElementById("errorMsg");
+
+      if (email === "tubeearn.help@gmail.com" && password === "Sanjeev95@") {
+        window.location.href = "dashboard.html";
+      } else {
+        errorMsg.textContent = "Invalid email or password!";
+      }
+    }
+  </script>
 </body>
 </html>
