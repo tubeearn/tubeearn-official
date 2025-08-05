@@ -1,127 +1,67 @@
-<!DOCTYPE html><html lang="en">
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TubeEarn Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TubeEarn Admin Dashboard</title>
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Segoe UI', sans-serif;
-    }body {
-  background-color: #121212;
-  color: #fff;
-  overflow-x: hidden;
-}
-
-.horizontal-menu {
-  display: flex;
-  overflow-x: auto;
-  padding: 10px;
-  background: #1e1e1e;
-  border-bottom: 1px solid #333;
-}
-
-.menu-item {
-  flex: 0 0 auto;
-  background-color: #2a2a2a;
-  color: white;
-  padding: 12px 20px;
-  margin-right: 10px;
-  border-radius: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-width: 90px;
-  text-align: center;
-  transition: 0.3s;
-  cursor: pointer;
-}
-
-.menu-item:hover {
-  background-color: #3a3a3a;
-}
-
-.menu-item i {
-  font-size: 22px;
-  margin-bottom: 6px;
-}
-
-.section {
-  padding: 20px;
-  display: none;
-}
-
-.section.active {
-  display: block;
-}
-
-/* Scrollbar */
-.horizontal-menu::-webkit-scrollbar {
-  height: 6px;
-}
-
-.horizontal-menu::-webkit-scrollbar-thumb {
-  background: #444;
-  border-radius: 3px;
-}
-
+    body { font-family: sans-serif; background: #f0f0f0; margin: 0; padding: 20px; }
+    h1 { color: #333; }
+    .card { background: white; padding: 20px; margin-bottom: 15px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);}
+    .card h2 { margin: 0 0 10px; }
   </style>
-  <script>
-    function showSection(id) {
-      document.querySelectorAll('.section').forEach(el => el.classList.remove('active'));
-      document.getElementById(id).classList.add('active');
-    }
-  </script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
-<body>  <div class="horizontal-menu">
-    <div class="menu-item" onclick="showSection('home')">
-      <i class="fas fa-house"></i>
-      Home
-    </div>
-    <div class="menu-item" onclick="showSection('revenue')">
-      <i class="fas fa-coins"></i>
-      Revenue
-    </div>
-    <div class="menu-item" onclick="showSection('wallet')">
-      <i class="fas fa-wallet"></i>
-      Wallet
-    </div>
-    <div class="menu-item" onclick="showSection('adsense')">
-      <i class="fas fa-bullhorn"></i>
-      AdSense
-    </div>
-    <div class="menu-item" onclick="showSection('maintenance')">
-      <i class="fas fa-screwdriver-wrench"></i>
-      Maintenance
-    </div>
-    <div class="menu-item" onclick="showSection('settings')">
-      <i class="fas fa-gear"></i>
-      Settings
-    </div>
-  </div>  <!-- Sections -->  <div id="home" class="section active">
-    <h2>🏠 Welcome to Dashboard</h2>
-    <p>This is the home section.</p>
-  </div>  <div id="revenue" class="section">
-    <h2>💰 Revenue Section</h2>
-    <p>Analytics, earnings, performance charts here.</p>
-  </div>  <div id="wallet" class="section">
-    <h2>👛 Wallet Section</h2>
-    <p>Balance, transactions, withdrawal options.</p>
-  </div>  <div id="adsense" class="section">
-    <h2>📢 AdSense Section</h2>
-    <p>Ad control, ID settings, earning stats.</p>
-  </div>  <div id="maintenance" class="section">
-    <h2>🛠️ Maintenance Mode</h2>
-    <label>
-      <input type="checkbox" id="toggleMaint"> Enable Maintenance Mode
-    </label>
-    <p>Maintenance page will show to all users except owner.</p>
-  </div>  <div id="settings" class="section">
-    <h2>⚙️ Settings</h2>
-    <p>Manage preferences, site controls, etc.</p>
-  </div></body>
+<body>
+  <h1>TubeEarn Real Admin Dashboard</h1>
+
+  <div class="card" id="revenueCard"><h2>Total Revenue</h2><p id="revenue">Loading...</p></div>
+  <div class="card" id="videosCard"><h2>Total Videos</h2><p id="videos">Loading...</p></div>
+  <div class="card" id="shortsCard"><h2>Total Shorts</h2><p id="shorts">Loading...</p></div>
+  <div class="card" id="subsCard"><h2>Total Subscribers</h2><p id="subs">Loading...</p></div>
+  <div class="card" id="walletCard"><h2>Total Wallet Balance</h2><p id="wallet">Loading...</p></div>
+  <div class="card" id="storageCard"><h2>Cloud Storage Memory Used</h2><p id="storage">Loading...</p></div>
+
+  <script type="module">
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
+
+    const supabaseUrl = 'https://ejbvidirnsjvadvekede.supabase.co'
+    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVqYnZpZGlybnNqdmFkdmVrZWRlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTM2MTA3ODMsImV4cCI6MjA2OTE4Njc4M30.KoCt8f2bXjn3843XOsRMLwyZ0lKpARkrRqb_GXlGfUs'
+
+    const supabase = createClient(supabaseUrl, supabaseKey)
+
+    async function fetchDashboardData() {
+      // Fetch revenue
+      let { data: revenueData, error: revenueError } = await supabase.from('revenue').select('amount')
+      let totalRevenue = revenueData?.reduce((sum, item) => sum + (item.amount || 0), 0) || 0
+      document.getElementById("revenue").innerText = "₹ " + totalRevenue
+
+      // Fetch videos
+      let { data: videosData, error: videosError } = await supabase.from('videos').select('id')
+      document.getElementById("videos").innerText = videosData?.length || 0
+
+      // Fetch shorts
+      let { data: shortsData, error: shortsError } = await supabase.from('shorts').select('id')
+      document.getElementById("shorts").innerText = shortsData?.length || 0
+
+      // Fetch subscribers
+      let { data: subsData, error: subsError } = await supabase.from('users').select('id')
+      document.getElementById("subs").innerText = subsData?.length || 0
+
+      // Fetch wallet balance
+      let { data: walletData, error: walletError } = await supabase.from('wallet').select('balance')
+      let totalWallet = walletData?.reduce((sum, w) => sum + (w.balance || 0), 0) || 0
+      document.getElementById("wallet").innerText = "₹ " + totalWallet
+
+      // Storage Usage (Cloud)
+      const { data: files, error: storageError } = await supabase.storage.from('wallet-transactions').list('', {limit:100})
+      let totalSizeBytes = 0
+      for (const file of files) totalSizeBytes += file.metadata?.size || 0
+      const totalSizeMB = (totalSizeBytes / (1024 * 1024)).toFixed(2)
+      document.getElementById("storage").innerText = `${totalSizeMB} MB used`
+    }
+
+    fetchDashboardData()
+  </script>
+</body>
 </html>
