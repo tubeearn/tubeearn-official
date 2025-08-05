@@ -1,1 +1,62 @@
-achha h
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Logout Prompt</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f1f1f1;
+    }
+
+    .logout-box {
+      position: absolute;
+      top: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #ffffff;
+      border: 2px solid black;
+      padding: 20px 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    .logout-box h2 {
+      color: #e53935; /* हल्का रेड */
+      margin: 0 0 15px 0;
+    }
+
+    .logout-btn {
+      padding: 10px 20px;
+      background-color: #e53935;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .logout-btn:hover {
+      background-color: #b71c1c;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="logout-box">
+    <h2>Do you want to Logout?</h2>
+    <button class="logout-btn" onclick="logout()">Logout</button>
+  </div>
+
+  <script>
+    function logout() {
+      // यहाँ login पेज का path दो
+      window.location.href = "login.html";  // तुम्हारे login page का नाम यहाँ होना चाहिए
+    }
+  </script>
+
+</body>
+</html>
