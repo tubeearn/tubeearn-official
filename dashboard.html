@@ -1,42 +1,4 @@
-// App.jsx
-import React from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import TopBar from "./components/TopBar";
-import DefaultHome from "./components/DefaultHome";
-import Revenue from "./components/Revenue";
-import UserData from "./components/UserData";
-import Wallet from "./components/Wallet";
-import AdSense from "./components/AdSense";
-import Setting from "./components/Setting";
-import Monetization from "./components/Monetization";
-import AiSanjeevCommand from "./components/AiSanjeevCommand";
-import Security from "./components/Security";
-import UpdatesSwitch from "./components/UpdatesSwitch";
-import SupabaseToFirebase from "./components/SupabaseToFirebase";
-import Logout from "./components/Logout";
-import Maintenance from "./components/Maintenance";
+// App.jsx import React from "react"; import { BrowserRouter as Router, Route, Routes } from "react-router-dom"; import TopBar from "./components/TopBar"; import DefaultHome from "./components/DefaultHome"; import Revenue from "./components/Revenue"; import UserData from "./components/UserData"; import Wallet from "./components/Wallet"; import AdSense from "./components/AdSense"; import Setting from "./components/Setting"; import Monetization from "./components/Monetization"; import AiSanjeevCommand from "./components/AiSanjeevCommand"; import Security from "./components/Security"; import UpdatesSwitch from "./components/UpdatesSwitch"; import SupabaseToFirebase from "./components/SupabaseToFirebase"; import Logout from "./components/Logout"; import Maintenance from "./components/Maintenance";
 
-export default function App() {
-  return (
-    <Router>
-      <div>
-        <TopBar />
-        <Routes>
-          <Route path="/" element={<DefaultHome />} />
-          <Route path="/revenue" element={<Revenue />} />
-          <Route path="/userdata" element={<UserData />} />
-          <Route path="/wallet" element={<Wallet />} />
-          <Route path="/adsense" element={<AdSense />} />
-          <Route path="/setting" element={<Setting />} />
-          <Route path="/monetization" element={<Monetization />} />
-          <Route path="/aisanjeev" element={<AiSanjeevCommand />} />
-          <Route path="/security" element={<Security />} />
-          <Route path="/updates" element={<UpdatesSwitch />} />
-          <Route path="/supafirebase" element={<SupabaseToFirebase />} />
-          <Route path="/maintenance" element={<Maintenance />} />
-          <Route path="/logout" element={<Logout />} />
-        </Routes>
-      </div>
-    </Router>
-  );
-}
+export default function App() { return ( <Router> <div> <TopBar /> <Routes> <Route path="/" element={<DefaultHome />} /> <Route path="/revenue" element={<Revenue />} /> <Route path="/userdata" element={<UserData />} /> <Route path="/wallet" element={<Wallet />} /> <Route path="/adsense" element={<AdSense />} /> <Route path="/setting" element={<Setting />} /> <Route path="/monetization" element={<Monetization />} /> <Route path="/aisanjeev" element={<AiSanjeevCommand />} /> <Route path="/security" element={<Security />} /> <Route path="/updates" element={<UpdatesSwitch />} /> <Route path="/supafirebase" element={<SupabaseToFirebase />} /> <Route path="/maintenance" element={<Maintenance />} /> <Route path="/logout" element={<Logout />} /> </Routes> </div> </Router> ); }
+
