@@ -1,67 +1,169 @@
-<!-- index.html -->
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>TubeEarn Admin Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TubeEarn Admin Panel</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
-    body { font-family: sans-serif; background: #f0f0f0; margin: 0; padding: 20px; }
-    h1 { color: #333; }
-    .card { background: white; padding: 20px; margin-bottom: 15px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);}
-    .card h2 { margin: 0 0 10px; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+    body {
+      display: flex;
+      height: 100vh;
+      background-color: #f5f7fa;
+    }
+    .sidebar {
+      width: 250px;
+      background-color: #1e1e2f;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      padding: 20px 0;
+      position: fixed;
+      height: 100vh;
+    }
+    .sidebar h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 22px;
+    }
+    .sidebar ul {
+      list-style: none;
+    }
+    .sidebar ul li {
+      padding: 15px 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .sidebar ul li:hover, .sidebar ul li.active {
+      background-color: #33334d;
+    }
+    .sidebar ul li i {
+      width: 20px;
+      text-align: center;
+    }
+    .main-content {
+      margin-left: 250px;
+      padding: 30px;
+      width: calc(100% - 250px);
+      overflow-y: auto;
+    }
+    .card {
+      background-color: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+    }
+    .card h3 {
+      margin-bottom: 10px;
+      font-size: 20px;
+    }
+    .flex-row {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .card-box {
+      flex: 1;
+      min-width: 220px;
+      background-color: #e8f0fe;
+      padding: 15px;
+      border-radius: 10px;
+      text-align: center;
+    }
+    .card-box h4 {
+      font-size: 18px;
+      margin-bottom: 5px;
+    }
   </style>
 </head>
 <body>
-  <h1>TubeEarn Real Admin Dashboard</h1>
+  <div class="sidebar">
+    <h2>TubeEarn Admin</h2>
+    <ul>
+      <li class="active" onclick="showPage('dashboard')"><i class="fas fa-chart-line"></i> Dashboard</li>
+      <li onclick="showPage('videos')"><i class="fas fa-video"></i> Videos</li>
+      <li onclick="showPage('shorts')"><i class="fas fa-play"></i> Shorts</li>
+      <li onclick="showPage('subscribers')"><i class="fas fa-users"></i> Subscribers</li>
+      <li onclick="showPage('wallet')"><i class="fas fa-wallet"></i> Wallet</li>
+      <li onclick="showPage('analytics')"><i class="fas fa-chart-pie"></i> Analytics</li>
+      <li onclick="showPage('settings')"><i class="fas fa-cog"></i> Settings</li>
+    </ul>
+  </div>
+  <div class="main-content">
+    <div id="dashboard" class="page">
+      <div class="flex-row">
+        <div class="card-box">
+          <h4>Total Users</h4>
+          <p>1,204</p>
+        </div>
+        <div class="card-box">
+          <h4>Daily Views</h4>
+          <p>18,342</p>
+        </div>
+        <div class="card-box">
+          <h4>Videos Uploaded</h4>
+          <p>542</p>
+        </div>
+      </div>
+    </div><div id="videos" class="page" style="display:none">
+  <div class="card">
+    <h3>All Uploaded Videos</h3>
+    <p>Video list with edit/delete options...</p>
+  </div>
+</div>
 
-  <div class="card" id="revenueCard"><h2>Total Revenue</h2><p id="revenue">Loading...</p></div>
-  <div class="card" id="videosCard"><h2>Total Videos</h2><p id="videos">Loading...</p></div>
-  <div class="card" id="shortsCard"><h2>Total Shorts</h2><p id="shorts">Loading...</p></div>
-  <div class="card" id="subsCard"><h2>Total Subscribers</h2><p id="subs">Loading...</p></div>
-  <div class="card" id="walletCard"><h2>Total Wallet Balance</h2><p id="wallet">Loading...</p></div>
-  <div class="card" id="storageCard"><h2>Cloud Storage Memory Used</h2><p id="storage">Loading...</p></div>
+<div id="shorts" class="page" style="display:none">
+  <div class="card">
+    <h3>Shorts Content</h3>
+    <p>All short videos overview</p>
+  </div>
+</div>
 
-  <script type="module">
-    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
+<div id="subscribers" class="page" style="display:none">
+  <div class="card">
+    <h3>Subscribers Stats</h3>
+    <p>Track subscriber growth...</p>
+  </div>
+</div>
 
-    const supabaseUrl = 'https://ejbvidirnsjvadvekede.supabase.co'
-    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVqYnZpZGlybnNqdmFkdmVrZWRlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTM2MTA3ODMsImV4cCI6MjA2OTE4Njc4M30.KoCt8f2bXjn3843XOsRMLwyZ0lKpARkrRqb_GXlGfUs'
+<div id="wallet" class="page" style="display:none">
+  <div class="card">
+    <h3>User Wallet System</h3>
+    <p>Wallet balance, withdrawal history</p>
+  </div>
+</div>
 
-    const supabase = createClient(supabaseUrl, supabaseKey)
+<div id="analytics" class="page" style="display:none">
+  <div class="card">
+    <h3>Traffic Analytics</h3>
+    <p>Real-time data and user behavior</p>
+  </div>
+</div>
 
-    async function fetchDashboardData() {
-      // Fetch revenue
-      let { data: revenueData, error: revenueError } = await supabase.from('revenue').select('amount')
-      let totalRevenue = revenueData?.reduce((sum, item) => sum + (item.amount || 0), 0) || 0
-      document.getElementById("revenue").innerText = "₹ " + totalRevenue
+<div id="settings" class="page" style="display:none">
+  <div class="card">
+    <h3>Admin Settings</h3>
+    <p>Change password, email, theme settings</p>
+  </div>
+</div>
 
-      // Fetch videos
-      let { data: videosData, error: videosError } = await supabase.from('videos').select('id')
-      document.getElementById("videos").innerText = videosData?.length || 0
+  </div>  <script>
+    function showPage(id) {
+      document.querySelectorAll('.page').forEach(page => page.style.display = 'none');
+      document.getElementById(id).style.display = 'block';
 
-      // Fetch shorts
-      let { data: shortsData, error: shortsError } = await supabase.from('shorts').select('id')
-      document.getElementById("shorts").innerText = shortsData?.length || 0
-
-      // Fetch subscribers
-      let { data: subsData, error: subsError } = await supabase.from('users').select('id')
-      document.getElementById("subs").innerText = subsData?.length || 0
-
-      // Fetch wallet balance
-      let { data: walletData, error: walletError } = await supabase.from('wallet').select('balance')
-      let totalWallet = walletData?.reduce((sum, w) => sum + (w.balance || 0), 0) || 0
-      document.getElementById("wallet").innerText = "₹ " + totalWallet
-
-      // Storage Usage (Cloud)
-      const { data: files, error: storageError } = await supabase.storage.from('wallet-transactions').list('', {limit:100})
-      let totalSizeBytes = 0
-      for (const file of files) totalSizeBytes += file.metadata?.size || 0
-      const totalSizeMB = (totalSizeBytes / (1024 * 1024)).toFixed(2)
-      document.getElementById("storage").innerText = `${totalSizeMB} MB used`
+      document.querySelectorAll('.sidebar ul li').forEach(li => li.classList.remove('active'));
+      event.target.closest('li').classList.add('active');
     }
-
-    fetchDashboardData()
-  </script>
-</body>
+  </script></body>
 </html>
