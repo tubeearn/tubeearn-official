@@ -3,89 +3,46 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>TubeEarn Login</title>
+  <title>TubeEarn - Login</title>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
-  <style>
-    body {
-      background: #121212;
-      color: white;
-      font-family: Arial, sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-    }
-
-    .login-box {
-      background: #1e1e1e;
-      padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.5);
-      text-align: center;
-      width: 90%;
-      max-width: 400px;
-    }
-
-    input[type="email"],
-    input[type="password"] {
-      width: 100%;
-      padding: 12px;
-      margin: 10px 0;
-      border: none;
-      border-radius: 6px;
-    }
-
-    button {
-      padding: 12px 20px;
-      background-color: #f72585;
-      border: none;
-      color: white;
-      font-size: 16px;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background-color: #d61e70;
-    }
-
-    .msg {
-      margin-top: 15px;
-    }
-  </style>
 </head>
-<body>
-  <div class="login-box">
-    <h2>TubeEarn Login</h2>
-    <input type="email" id="email" placeholder="Email" value="tubeearn.help@gmail.com" />
-    <input type="password" id="password" placeholder="Password" value="Sanjeev95@" />
-    <button onclick="login()">Login</button>
-    <div class="msg" id="msg"></div>
-  </div>
+<body style="font-family: Arial, sans-serif; text-align: center; margin-top: 80px;">
+
+  <h2>Login to TubeEarn</h2>
+  <input type="email" id="email" placeholder="Enter Email" style="padding: 10px; width: 250px;" /><br><br>
+  <input type="password" id="password" placeholder="Enter Password" style="padding: 10px; width: 250px;" /><br><br>
+  <button onclick="loginUser()" style="padding: 10px 30px; cursor: pointer;">Login</button>
+
+  <p id="message" style="margin-top: 20px; font-weight: bold;"></p>
 
   <script>
-    const supabaseUrl = 'https://ejbvidirnsjvadvekede.supabase.co';
-    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVqYnZpZGlybnNqdmFkdmVrZWRlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTM2MTA3ODMsImV4cCI6MjA2OTE4Njc4M30.KoCt8f2bXjn3843XOsRMLwyZ0lKpARkrRqb_GXlGfUs';
+    // ✅ Your Supabase credentials
+    const SUPABASE_URL = 'https://ejbvidirnsjvadvekede.supabase.co';
+    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVqYnZpZGlybnNqdmFkdmVrZWRlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTM2MTA3ODMsImV4cCI6MjA2OTE4Njc4M30.KoCt8f2bXjn3843XOsRMLwyZ0lKpARkrRqb_GXlGfUs';
 
-    const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+    const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-    async function login() {
-      const email = document.getElementById("email").value;
-      const password = document.getElementById("password").value;
+    async function loginUser() {
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value.trim();
+
+      if (!email || !password) {
+        document.getElementById('message').innerText = "❌ Please enter email and password";
+        return;
+      }
 
       const { data, error } = await supabase.auth.signInWithPassword({
         email,
-        password,
+        password
       });
 
       if (error) {
-        document.getElementById("msg").innerText = "❌ Login failed: " + error.message;
+        document.getElementById('message').innerText = "❌ " + error.message;
       } else {
-        document.getElementById("msg").innerText = "✅ Login successful! Redirecting...";
+        document.getElementById('message').innerText = "✅ Login successful!";
         setTimeout(() => {
-          window.location.href = "dashboard.html"; // change this to your dashboard page
-        }, 1500);
+          window.location.href = "dashboard.html"; // Redirect to dashboard
+        }, 1000);
       }
     }
   </script>
