@@ -1,0 +1,45 @@
+<!-- logout.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Logout | TubeEarn</title>
+
+  <!-- ✅ अपनी पुरानी CSS link जो पहले इस्तेमाल हो रही थी -->
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- ✅ Redirect Script (GitHub & domain दोनों में चलेगा) -->
+  <script>
+    setTimeout(() => {
+      const path = window.location.origin.includes("github.io")
+        ? "/tubeesrn-official/index.html"
+        : "/index.html";
+      window.location.href = window.location.origin + path;
+    }, 2000); // 2 sec wait before redirect
+  </script>
+</head>
+<body>
+  <!-- ✅ पुराना वाला header जैसा था -->
+  <header class="header">
+    <div class="container">
+      <h1 class="logo">TubeEarn</h1>
+    </div>
+  </header>
+
+  <!-- ✅ Logout message -->
+  <main class="container center">
+    <div class="card">
+      <h2>✅ You have been logged out successfully.</h2>
+      <p>You are being redirected to the homepage...</p>
+    </div>
+  </main>
+
+  <!-- ✅ पुराना वाला footer जैसा था -->
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2025 TubeEarn. All rights reserved.</p>
+    </div>
+  </footer>
+</body>
+</html>
