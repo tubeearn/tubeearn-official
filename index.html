@@ -3,42 +3,65 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>TubeEarn Login</title>
+  <title>Login - TubeEarn</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <style>
+    body {
+      background-color: #121212;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+    input, button {
+      margin: 10px;
+      padding: 10px;
+      width: 250px;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+    input {
+      background-color: #1e1e1e;
+      color: #fff;
+    }
+    button {
+      background-color: #03a9f4;
+      color: white;
+      cursor: pointer;
+    }
+    .error {
+      color: red;
+    }
+  </style>
 </head>
 <body>
-  <h2>Login</h2>
-  <input type="email" id="email" placeholder="Enter your email" /><br><br>
-  <input type="password" id="password" placeholder="Enter your password" /><br><br>
-  <button id="loginBtn">Login</button></a>
+  <h2>TubeEarn Owner Login</h2>
+  <input type="email" id="email" placeholder="Enter Email" />
+  <input type="password" id="password" placeholder="Enter Password" />
+  <button onclick="login()">Login</button>
+  <p class="error" id="errorMsg"></p>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
     const supabaseUrl = "https://ejbvidirnsjvadvekede.supabase.co";
     const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVqYnZpZGlybnNqdmFkdmVrZWRlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTM2MTA3ODMsImV4cCI6MjA2OTE4Njc4M30.KoCt8f2bXjn3843XOsRMLwyZ0lKpARkrRqb_GXlGfUs";
 
     const supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
-    document.getElementById("loginBtn").addEventListener("click", async () => {
+    async function login() {
       const email = document.getElementById("email").value;
       const password = document.getElementById("password").value;
-
-      if (!email || !password) {
-        alert("Please fill in both email and password.");
-        return;
-      }
-
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email: email,
-        password: password
-      });
+      const { data, error } = await supabase.auth.signInWithPassword({ email, password });
 
       if (error) {
-        alert("❌ Login failed: " + error.message);
+        document.getElementById("errorMsg").innerText = error.message;
       } else {
-        alert("✅ Login successful!");
-        window.location.href = "dashboard.html";
+        window.location.href = "dashboard.html";  // Replace with your dashboard page
       }
-    });
+    }
   </script>
 </body>
 </html>
