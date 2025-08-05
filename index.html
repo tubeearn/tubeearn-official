@@ -12,8 +12,9 @@
       background: #121212;
       color: #fff;
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       justify-content: center;
+      padding-top: 60px;
       height: 100vh;
     }
 
@@ -25,6 +26,7 @@
       text-align: center;
       width: 100%;
       max-width: 350px;
+      position: relative;
     }
 
     .login-box h2 {
@@ -54,6 +56,12 @@
     .login-box button:hover {
       background: #45a049;
     }
+
+    .error-message {
+      color: #ff4f4f;
+      font-size: 14px;
+      margin-top: 10px;
+    }
   </style>
 </head>
 <body>
@@ -63,6 +71,7 @@
   <input type="email" id="email" placeholder="Enter your email" required />
   <input type="password" id="password" placeholder="Enter your password" required />
   <button onclick="login()">Login</button>
+  <div id="error" class="error-message"></div>
 </div>
 
 <script>
@@ -74,23 +83,24 @@
   async function login() {
     const email = document.getElementById("email").value.trim();
     const password = document.getElementById("password").value.trim();
+    const errorDiv = document.getElementById("error");
+    errorDiv.textContent = ""; // Clear old errors
 
     if (!email || !password) {
-      alert("Please fill in all fields.");
+      errorDiv.textContent = "Please fill in all fields.";
       return;
     }
 
     const { data, error } = await supabase.auth.signInWithPassword({ email, password });
 
     if (error) {
-      alert("Login Failed: " + error.message);
+      errorDiv.textContent = "Login Failed: " + error.message;
     } else {
-      // Show message before redirect
-      alert("Login successful!");
-      // Clear any URL params (clean URL)
-      window.history.replaceState({}, document.title, window.location.pathname);
-      // Redirect to dashboard
-      window.location.href = "dashboard.html";
+      errorDiv.textContent = "Login successful! Redirecting...";
+      setTimeout(() => {
+        window.history.replaceState({}, document.title, window.location.pathname);
+        window.location.href = "dashboard.html";
+      }, 1000);
     }
   }
 </script>
