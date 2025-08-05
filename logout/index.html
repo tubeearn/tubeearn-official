@@ -1,93 +1,80 @@
-<!-- logout.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Logout | TubeEarn</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Logout Example - TubeEarn Style</title>
+
+  <!-- SweetAlert2 CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
   <style>
     body {
-      margin: 0;
-      font-family: "Segoe UI", sans-serif;
-      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-      height: 100vh;
+      font-family: Arial, sans-serif;
+      background: #f7f7f7;
       display: flex;
       justify-content: center;
       align-items: center;
+      height: 100vh;
     }
 
-    .logout-box {
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      backdrop-filter: blur(15px);
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-      padding: 40px;
-      border-radius: 16px;
-      text-align: center;
-      color: #fff;
-      max-width: 400px;
-      width: 90%;
-      animation: fadeIn 1s ease-in-out;
-    }
-
-    .logout-box h2 {
-      margin-bottom: 10px;
-      font-size: 24px;
-    }
-
-    .logout-box p {
-      margin-bottom: 20px;
-    }
-
-    .logout-box .tick {
-      font-size: 50px;
-      color: #4caf50;
-    }
-
-    .btn-group {
-      display: flex;
-      justify-content: space-around;
-      margin-top: 20px;
-    }
-
-    .btn {
-      background-color: #ffffff22;
-      border: 1px solid #fff;
-      color: #fff;
-      padding: 10px 20px;
+    .logout-btn {
+      padding: 12px 24px;
+      background-color: #ff4d4d;
+      color: white;
+      border: none;
       border-radius: 8px;
+      font-size: 18px;
+      font-weight: bold;
       cursor: pointer;
-      text-decoration: none;
-      transition: 0.3s;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      transition: 0.3s ease;
     }
 
-    .btn:hover {
-      background-color: #ffffff44;
-    }
-
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: scale(0.9);
-      }
-      to {
-        opacity: 1;
-        transform: scale(1);
-      }
+    .logout-btn:hover {
+      background-color: #e60000;
     }
   </style>
 </head>
 <body>
-  <div class="logout-box">
-    <div class="tick">✅</div>
-    <h2>You have been logged out successfully!</h2>
-    <p>Would you like to explore <strong>WhatsApp Status Videos</strong>?</p>
-    
-    <div class="btn-group">
-      <a href="/tubeesrn-official/status.html" class="btn">Yes</a>
-      <a href="/tubeesrn-official/dashboard.html" class="btn">No</a>
-    </div>
-  </div>
+
+  <!-- Logout Button -->
+  <button class="logout-btn" onclick="logout()">Logout</button>
+
+  <script>
+    function logout() {
+      Swal.fire({
+        title: 'Do you really want to logout?',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonText: 'Yes',
+        cancelButtonText: 'No',
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // Clear session/local storage if any
+          localStorage.removeItem("user");
+          sessionStorage.clear();
+
+          Swal.fire({
+            title: 'Logout successful!',
+            icon: 'success',
+            timer: 1500,
+            showConfirmButton: false
+          }).then(() => {
+            // Smart redirect
+            const baseUrl = window.location.origin;
+            const redirectUrl = baseUrl + '/index.html';
+            window.location.href = redirectUrl;
+          });
+
+        } else {
+          Swal.fire('You are still logged in.', '', 'info');
+        }
+      });
+    }
+  </script>
+
 </body>
 </html>
