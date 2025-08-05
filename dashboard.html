@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TubeEarn Owner Dashboard</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: sans-serif; }
+    body { background: #f9f9f9; color: #333; }
+
+    /* Top Bar */
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #d0e9ff;
+      color: #000;
+      padding: 15px 20px;
+      position: relative;
+    }
+    .topbar .welcome { font-size: 18px; }
+    .profile {
+      width: 40px; height: 40px;
+      background: #fff;
+      border-radius: 50%;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .dropdown {
+      display: none;
+      position: absolute;
+      top: 60px;
+      right: 20px;
+      background: white;
+      border: 1px solid #ccc;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      z-index: 99;
+    }
+    .dropdown a {
+      display: block;
+      padding: 10px;
+      color: #333;
+      text-decoration: none;
+    }
+    .dropdown a:hover {
+      background: #d0e9ff;
+    }
+
+    /* Menu Bar */
+    .menubar {
+      display: flex;
+      overflow-x: auto;
+      background: #d0e9ff;
+      padding: 10px;
+    }
+    .menubar a {
+      min-width: 150px;
+      padding: 10px;
+      margin-right: 10px;
+      background: #333;
+      color: #fff;
+      border-radius: 8px;
+      text-align: center;
+      text-decoration: none;
+      flex-shrink: 0;
+    }
+    .menubar a:hover {
+      background: #444;
+    }
+
+    .content {
+      padding: 20px;
+    }
+
+    .box {
+      padding: 20px;
+      background: #fff;
+      border-radius: 8px;
+      border: 2px solid #2196f3;
+      color: #2196f3;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="topbar">
+    <div class="welcome">Welcome to Owner Mr. Sanjeev Kumar</div>
+    <div class="profile" onclick="toggleProfile()"></div>
+    <div class="dropdown" id="profileMenu">
+      <a href="profile/">My Profile</a>
+      <a href="profile/settings/">Settings</a>
+      <a href="logout/">Logout</a>
+    </div>
+  </div>
+
+  <div class="menubar">
+    <a href="default/">Default Home</a>
+    <a href="revenue/">Revenue</a>
+    <a href="userdata/">User Data</a>
+    <a href="wallet/">Wallet</a>
+    <a href="adsense/">AdSense</a>
+    <a href="setting/">Setting</a>
+    <a href="monetization/">Monetization</a>
+    <a href="aisanjeev/">AiSanjeev Command</a>
+    <a href="security/">Security</a>
+    <a href="updates/">Updates Switch</a>
+    <a href="sync/">Supabase to Firebase</a>
+    <a href="maintenance/">Maintenance</a>
+    <a href="logout/">Logout</a>
+  </div>
+
+  <div class="content">
+    <div class="box">Maintenance Panel - System Monitoring Active</div>
+  </div>
+
+  <script>
+    function toggleProfile() {
+      const dropdown = document.getElementById("profileMenu");
+      dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+    }
+
+    document.addEventListener("click", function(e) {
+      const profile = document.querySelector(".profile");
+      const dropdown = document.getElementById("profileMenu");
+      if (!profile.contains(e.target) && !dropdown.contains(e.target)) {
+        dropdown.style.display = "none";
+      }
+    });
+  </script>
+
+</body>
+</html>
