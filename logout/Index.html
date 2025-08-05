@@ -3,7 +3,34 @@
 <head>
   <meta charset="UTF-8">
   <title>Logout</title>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script type="module">
+    import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
+
+    const supabaseUrl = "https://ejbvidirnsjvadvekede.supabase.co";
+    const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVqYnZpZGlybnNqdmFkdmVrZWRlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTM2MTA3ODMsImV4cCI6MjA2OTE4Njc4M30.KoCt8f2bXjn3843XOsRMLwyZ0lKpARkrRqb_GXlGfUs";
+
+    const supabase = createClient(supabaseUrl, supabaseKey);
+
+    window.logoutUser = async function () {
+      const { error } = await supabase.auth.signOut();
+      if (error) {
+        alert("Logout failed: " + error.message);
+        return;
+      }
+
+      localStorage.clear();
+      sessionStorage.clear();
+      document.getElementById("logoutMessage").style.display = "block";
+
+      setTimeout(() => {
+        window.location.href = "../women/main/index.html";
+      }, 2500);
+    }
+
+    window.goBack = function () {
+      window.location.href = "../dashboard.html";
+    }
+  </script>
   <style>
     body {
       margin: 0;
@@ -81,46 +108,10 @@
     <h1>Logout</h1>
     <p>Do you want to logout?</p>
     <div class="btn-group">
-      <button class="btn btn-yes" id="logoutBtn">YES</button>
+      <button class="btn btn-yes" onclick="logoutUser()">YES</button>
       <button class="btn btn-no" onclick="goBack()">NO</button>
     </div>
     <div class="message" id="logoutMessage">Your logout was successful.</div>
   </div>
-
-  <script>
-    const supabaseUrl = "https://ejbvidirnsjvadvekede.supabase.co";
-    const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVqYnZpZGlybnNqdmFkdmVrZWRlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTM2MTA3ODMsImV4cCI6MjA2OTE4Njc4M30.KoCt8f2bXjn3843XOsRMLwyZ0lKpARkrRqb_GXlGfUs";
-
-    const supabase = supabase.createClient(supabaseUrl, supabaseKey);
-
-    document.getElementById("logoutBtn").addEventListener("click", async function () {
-      try {
-        const { error } = await supabase.auth.signOut();
-
-        if (error) {
-          alert("Logout failed: " + error.message);
-          return;
-        }
-
-        // Local cleanup
-        localStorage.clear();
-        sessionStorage.clear();
-
-        // Show success message
-        document.getElementById("logoutMessage").style.display = "block";
-
-        // Redirect to login page after 2.5 seconds
-        setTimeout(() => {
-          window.location.href = "../women/main/index.html";
-        }, 2500);
-      } catch (err) {
-        alert("Unexpected error: " + err.message);
-      }
-    });
-
-    function goBack() {
-      window.location.href = "../dashboard.html";
-    }
-  </script>
 </body>
 </html>
