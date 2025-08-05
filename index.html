@@ -3,33 +3,63 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>TubeEarn - Login</title>
+  <title>TubeEarn Login</title>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #121212;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+    .login-container {
+      background: #1f1f1f;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px #000;
+    }
+    input {
+      padding: 10px;
+      margin: 10px 0;
+      width: 250px;
+      border-radius: 5px;
+      border: none;
+    }
+    button {
+      padding: 10px 20px;
+      background-color: #00bcd4;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0097a7;
+    }
+  </style>
 </head>
-<body style="font-family: Arial, sans-serif; text-align: center; margin-top: 80px;">
-
-  <h2>Login to TubeEarn</h2>
-  <input type="email" id="email" placeholder="Enter Email" style="padding: 10px; width: 250px;" /><br><br>
-  <input type="password" id="password" placeholder="Enter Password" style="padding: 10px; width: 250px;" /><br><br>
-  <button onclick="loginUser()" style="padding: 10px 30px; cursor: pointer;">Login</button>
-
-  <p id="message" style="margin-top: 20px; font-weight: bold;"></p>
+<body>
+  <div class="login-container">
+    <h2>TubeEarn Login</h2>
+    <input type="email" id="email" placeholder="Enter Email" value="tubeearn.help@gmail.com" /><br />
+    <input type="password" id="password" placeholder="Enter Password" value="Sanjeev95@" /><br />
+    <button onclick="login()">Login</button>
+    <p id="message"></p>
+  </div>
 
   <script>
-    // ✅ Your Supabase credentials
     const SUPABASE_URL = 'https://ejbvidirnsjvadvekede.supabase.co';
-    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVqYnZpZGlybnNqdmFkdmVrZWRlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTM2MTA3ODMsImV4cCI6MjA2OTE4Njc4M30.KoCt8f2bXjn3843XOsRMLwyZ0lKpARkrRqb_GXlGfUs';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVqYnZpZGlybnNqdmFkdmVrZWRlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTM2MTA3ODMsImV4cCI6MjA2OTE4Njc4M30.KoCt8f2bXjn3843XOsRMLwyZ0lKpARkrRqb_GXlGfUs';
 
-    const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    async function loginUser() {
-      const email = document.getElementById('email').value.trim();
-      const password = document.getElementById('password').value.trim();
-
-      if (!email || !password) {
-        document.getElementById('message').innerText = "❌ Please enter email and password";
-        return;
-      }
+    async function login() {
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
 
       const { data, error } = await supabase.auth.signInWithPassword({
         email,
@@ -37,11 +67,13 @@
       });
 
       if (error) {
-        document.getElementById('message').innerText = "❌ " + error.message;
+        document.getElementById("message").innerText = "Login failed: " + error.message;
+        document.getElementById("message").style.color = "red";
       } else {
-        document.getElementById('message').innerText = "✅ Login successful!";
+        document.getElementById("message").innerText = "Login successful!";
+        document.getElementById("message").style.color = "lightgreen";
         setTimeout(() => {
-          window.location.href = "dashboard.html"; // Redirect to dashboard
+          window.location.href = "dashboard.html"; // redirect to dashboard
         }, 1000);
       }
     }
