@@ -2,117 +2,55 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Logout</title>
-  <script type="module">
-    import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
-
-    const supabaseUrl = "https://ejbvidirnsjvadvekede.supabase.co";
-    const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVqYnZpZGlybnNqdmFkdmVrZWRlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTM2MTA3ODMsImV4cCI6MjA2OTE4Njc4M30.KoCt8f2bXjn3843XOsRMLwyZ0lKpARkrRqb_GXlGfUs";
-
-    const supabase = createClient(supabaseUrl, supabaseKey);
-
-    window.logoutUser = async function () {
-      const { error } = await supabase.auth.signOut();
-      if (error) {
-        alert("Logout failed: " + error.message);
-        return;
-      }
-
-      localStorage.clear();
-      sessionStorage.clear();
-      document.getElementById("logoutMessage").style.display = "block";
-
-      // ✅ यहीं redirect हो रहा है सही जगह
-      setTimeout(() => {
-        window.location.href = "/tubeearn-official/index.html";
-      }, 2500);
-    }
-
-    window.goBack = function () {
-      window.location.href = "../dashboard.html";
-    }
-  </script>
+  <title>Logout Page</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    body {
-      margin: 0;
-      padding: 0;
-      background-color: #0a1930;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
-
-    .logout-container {
-      width: 595px;
-      height: 842px;
-      background: linear-gradient(to bottom right, #f2eecb, #e1f5f2);
-      box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
-      border-radius: 12px;
-      padding: 40px;
-      box-sizing: border-box;
-      text-align: center;
-      font-family: 'Segoe UI', sans-serif;
-    }
-
-    .logout-container h1 {
-      margin-top: 10px;
-      color: #2c3e50;
-      font-size: 36px;
-    }
-
-    .logout-container p {
-      font-size: 22px;
-      margin: 40px 0 30px;
-      color: #444;
-    }
-
-    .btn-group {
-      display: flex;
-      justify-content: center;
-      gap: 30px;
-    }
-
-    .btn {
-      padding: 15px 35px;
-      font-size: 18px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-
-    .btn-yes {
-      background-color: #27ae60;
-      color: white;
-    }
-
-    .btn-no {
-      background-color: #e74c3c;
-      color: white;
-    }
-
-    .btn:hover {
-      transform: scale(1.05);
-    }
-
-    .message {
-      font-size: 20px;
-      color: #2ecc71;
-      margin-top: 30px;
+    #logoutPopup {
       display: none;
+      position: fixed;
+      top: 30%;
+      left: 30%;
+      background: #fff;
+      border: 1px solid #ccc;
+      padding: 20px;
+      z-index: 1000;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    }
+    button {
+      margin: 5px;
+      padding: 10px 15px;
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
-  <div class="logout-container">
-    <h1>Logout</h1>
+
+  <h2>Welcome to TubeEarn</h2>
+  <button onclick="confirmLogout()">Logout</button>
+
+  <!-- Logout Popup -->
+  <div id="logoutPopup">
     <p>Do you want to logout?</p>
-    <div class="btn-group">
-      <button class="btn btn-yes" onclick="logoutUser()">YES</button>
-      <button class="btn btn-no" onclick="goBack()">NO</button>
-    </div>
-    <div class="message" id="logoutMessage">Your logout was successful.</div>
+    <button onclick="logout()">Yes</button>
+    <button onclick="closePopup()">No</button>
   </div>
+
+  <script>
+    function confirmLogout() {
+      document.getElementById("logoutPopup").style.display = "block";
+    }
+
+    function closePopup() {
+      document.getElementById("logoutPopup").style.display = "none";
+    }
+
+    function logout() {
+      alert("Logged out successfully!");
+
+      // GitHub Pages redirect:
+      window.location.href = "/tubeearn-official/index.html";
+    }
+  </script>
+
 </body>
 </html>
