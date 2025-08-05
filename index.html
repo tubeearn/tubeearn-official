@@ -1,96 +1,99 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TubeEarn Login</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TubeEarn - Login</title>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background: #121212;
-      color: #fff;
+      background: #f0f2f5;
       display: flex;
-      align-items: center;
       justify-content: center;
-      height: 100vh;
+      align-items: flex-start;
+      padding-top: 60px;
+      min-height: 100vh;
     }
-
     .login-box {
-      background: #1e1e1e;
-      padding: 30px;
+      background: white;
+      padding: 40px;
       border-radius: 12px;
-      box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
-      text-align: center;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
       width: 100%;
-      max-width: 350px;
+      max-width: 400px;
+      text-align: center;
     }
-
     .login-box h2 {
-      margin-bottom: 20px;
+      margin-bottom: 24px;
     }
-
-    .login-box input {
+    .input-group {
+      margin-bottom: 20px;
+      text-align: left;
+    }
+    .input-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+    }
+    .input-group input {
       width: 100%;
       padding: 12px;
-      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+    button {
+      padding: 12px 24px;
+      background-color: #007bff;
+      color: white;
       border: none;
       border-radius: 8px;
       font-size: 16px;
-      background: #2c2c2c;
-      color: #fff;
-    }
-
-    .login-box button {
-      background: #4caf50;
-      color: white;
-      padding: 12px;
-      width: 100%;
-      border: none;
-      border-radius: 8px;
-      font-size: 18px;
       cursor: pointer;
+      width: 100%;
     }
-
-    .login-box button:hover {
-      background: #45a049;
+    .message {
+      margin-top: 20px;
+      color: green;
+      font-weight: bold;
     }
   </style>
 </head>
-<body>
+<body>  <div class="login-box">
+    <h2>Login to TubeEarn</h2>
+    <div class="input-group">
+      <label for="email">Email</label>
+      <input type="email" id="email" placeholder="Enter your owner email" required />
+    </div>
+    <div class="input-group">
+      <label for="password">Password</label>
+      <input type="password" id="password" placeholder="Enter your owner password" required />
+    </div>
+    <button onclick="loginUser()">Login</button>
+    <div class="message" id="message"></div>
+  </div>  <script>
+    const supabase = supabase.createClient(
+      'https://ejbvidirnsjvadvekede.supabase.co',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVqYnZpZGlybnNqdmFkdmVrZWRlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTM2MTA3ODMsImV4cCI6MjA2OTE4Njc4M30.KoCt8f2bXjn3843XOsRMLwyZ0lKpARkrRqb_GXlGfUs'
+    );
 
-<div class="login-box">
-  <h2>Login to TubeEarn</h2>
-  <input type="email" id="email" />
-  <input type="password" id="password" />
-  <button onclick="login()">Login</button>
-</div>
+    async function loginUser() {
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+      const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+      const msg = document.getElementById("message");
 
-<script>
-  const supabase = window.supabase.createClient(
-    'https://ejbvidirnsjvadvekede.supabase.co',
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVqYnZpZGlybnNqdmFkdmVrZWRlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTM2MTA3ODMsImV4cCI6MjA2OTE4Njc4M30.KoCt8f2bXjn3843XOsRMLwyZ0lKpARkrRqb_GXlGfUs'
-  );
-
-  async function login() {
-    const email = document.getElementById("email").value.trim();
-    const password = document.getElementById("password").value.trim();
-
-    if (!email || !password) {
-      alert("Please fill in all fields.");
-      return;
+      if (error) {
+        msg.style.color = 'red';
+        msg.textContent = error.message;
+      } else {
+        msg.style.color = 'green';
+        msg.textContent = "Login successful! Redirecting to your dashboard...";
+        setTimeout(() => {
+          window.location.href = "/dashboard.html";
+        }, 2000);
+      }
     }
-
-    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-
-    if (error) {
-      alert("Login Failed: " + error.message);
-    } else {
-      window.location.replace("dashboard.html"); // 👈 Clean redirect without showing 'link'
-    }
-  }
-</script>
-
-</body>
+  </script></body>
 </html>
