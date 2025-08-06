@@ -1,36 +1,41 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>TubeEarn Owner Dashboard</title>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: sans-serif; }
-    body { background: #001f3f; color: #ffffff; }
-    
+    * {
+      margin: 0; padding: 0; box-sizing: border-box; font-family: sans-serif;
+    }
+    body {
+      background: #001f3f;
+      color: #ffffff;
+    }
     .topbar {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: #0a2746;
+      background: #0a2746; /* ✅ Dark background */
       color: #fff;
       padding: 15px 20px;
+      position: relative;
       border-top: 4px solid red;
       border-bottom: 4px solid red;
     }
-    .topbar .welcome { font-size: 20px; font-family: cursive; }
-
+    .topbar .welcome {
+      font-size: 20px;
+      font-family: cursive;
+      font-weight: bold;
+    }
     .profile {
       width: 40px;
       height: 40px;
-      background: #333;
+      background: #cccccc;
       border-radius: 50%;
       cursor: pointer;
-      box-shadow: 0 0 5px #00bfff;
       position: relative;
     }
-
     .dropdown {
       display: none;
       position: absolute;
@@ -50,7 +55,6 @@
     .dropdown a:hover {
       background: #d0e9ff;
     }
-
     .menubar {
       display: flex;
       overflow-x: auto;
@@ -73,9 +77,9 @@
     .menubar a:hover {
       background: #007bff;
     }
-
-    .content { padding: 20px; }
-
+    .content {
+      padding: 20px;
+    }
     .box {
       padding: 20px;
       background: #001a33;
@@ -85,7 +89,6 @@
       font-weight: bold;
       margin-bottom: 10px;
     }
-
     .payment-stats {
       background: #002244;
       padding: 16px;
@@ -104,45 +107,52 @@
       color: #fff;
     }
 
-    /* ✅ Logout Modal */
+    /* ✅ Logout Modal Styles */
     #logoutModal {
       display: none;
       position: fixed;
       top: 0; left: 0;
       width: 100%; height: 100%;
-      background: rgba(0,0,0,0.7);
+      background: rgba(0,0,0,0.6);
       justify-content: center;
       align-items: center;
       z-index: 999;
     }
     .logout-box {
-      background: #fff;
-      width: 400px;
+      background: white;
       padding: 30px;
-      border-radius: 12px;
+      border-radius: 10px;
       text-align: center;
-      box-shadow: 0 0 15px #000;
+      width: 300px;
+      box-shadow: 0 0 15px black;
     }
     .logout-box p {
-      font-size: 20px;
-      color: #333;
+      font-size: 18px;
+      color: #000;
+      font-weight: bold;
       margin-bottom: 20px;
-      font-family: cursive;
     }
     .logout-box button {
-      padding: 10px 20px;
+      padding: 8px 16px;
       margin: 0 10px;
+      font-size: 16px;
       border: none;
       border-radius: 6px;
-      font-size: 16px;
       cursor: pointer;
     }
-    .logout-box button:first-child { background: red; color: white; }
-    .logout-box button:last-child { background: gray; color: white; }
+    .logout-box button.yes {
+      background: red;
+      color: white;
+    }
+    .logout-box button.no {
+      background: gray;
+      color: white;
+    }
   </style>
 </head>
 <body>
 
+  <!-- ✅ Topbar -->
   <div class="topbar">
     <div class="welcome">Welcome to Owner Mr. Sanjeev Kumar</div>
     <div class="profile" onclick="toggleProfile()"></div>
@@ -153,6 +163,7 @@
     </div>
   </div>
 
+  <!-- ✅ Menubar -->
   <div class="menubar">
     <a href="default/">Default Home</a>
     <a href="/revenue/">Revenue</a>
@@ -169,25 +180,27 @@
     <a href="#" onclick="showLogoutModal()">Logout</a>
   </div>
 
+  <!-- ✅ Logout Modal -->
+  <div id="logoutModal">
+    <div class="logout-box">
+      <p>Do you want to logout?</p>
+      <button class="yes" onclick="confirmLogout()">Yes</button>
+      <button class="no" onclick="hideLogoutModal()">No</button>
+    </div>
+  </div>
+
+  <!-- ✅ Wallet -->
   <div class="content" id="wallet-data">
     <div class="box">Loading wallet transactions...</div>
   </div>
 
+  <!-- ✅ Payment Stats -->
   <div class="content">
     <div class="payment-stats">
       <h2>💰 Real-Time Payment Sources</h2>
       <ul id="paymentList">
         <li>Loading payment data...</li>
       </ul>
-    </div>
-  </div>
-
-  <!-- ✅ Logout Modal -->
-  <div id="logoutModal">
-    <div class="logout-box">
-      <p>Do you want to logout, Owner?</p>
-      <button onclick="confirmLogout()">Yes</button>
-      <button onclick="hideLogoutModal()">No</button>
     </div>
   </div>
 
@@ -215,20 +228,24 @@
       dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
     }
 
+    // ✅ Show Modal
     function showLogoutModal() {
       document.getElementById("logoutModal").style.display = "flex";
     }
 
+    // ✅ Hide Modal
     function hideLogoutModal() {
       document.getElementById("logoutModal").style.display = "none";
     }
 
+    // ✅ Confirm Logout
     function confirmLogout() {
       localStorage.clear();
       supabase.auth.signOut();
       window.location.href = "../index.html";
     }
 
+    // ✅ Hide dropdown when clicking outside
     document.addEventListener("click", function(e) {
       const profile = document.querySelector(".profile");
       const dropdown = document.getElementById("profileMenu");
@@ -238,10 +255,8 @@
         dropdown.style.display = "none";
       }
 
-      if (
-        modal.style.display === "flex" &&
-        !modal.querySelector(".logout-box").contains(e.target)
-      ) {
+      // Close modal if clicked outside
+      if (modal.style.display === "flex" && !modal.querySelector(".logout-box").contains(e.target)) {
         hideLogoutModal();
       }
     });
