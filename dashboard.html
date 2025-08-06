@@ -17,27 +17,25 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: #b3d9ff;
-      color: #000;
+      background: #0a2746;
+      color: #fff;
       padding: 15px 20px;
       position: relative;
       border-top: 4px solid red;
       border-bottom: 4px solid red;
     }
     .topbar .welcome {
-      font-size: 18px;
-      font-weight: bold;
-      background: linear-gradient(to right, #1e3c72, #2a5298);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      font-size: 20px;
+      font-family: cursive;
     }
     .profile {
       width: 40px;
       height: 40px;
-      background: #999;
+      background: #333;
       border-radius: 50%;
       cursor: pointer;
       position: relative;
+      box-shadow: 0 0 5px #00bfff;
     }
     .dropdown {
       display: none;
@@ -110,43 +108,46 @@
       color: #fff;
     }
 
-    /* Logout Modal Styles */
+    /* ✅ Logout Modal */
     #logoutModal {
       display: none;
       position: fixed;
       top: 0; left: 0;
       width: 100%; height: 100%;
-      background: rgba(0, 0, 0, 0.7);
+      background: rgba(0,0,0,0.7);
       justify-content: center;
       align-items: center;
       z-index: 999;
     }
-
     .logout-box {
-      width: 80%;
-      max-width: 600px;
-      background: chocolate;
-      color: #fff;
-      padding: 40px;
+      background: #fff;
+      width: 400px;
+      padding: 30px;
       border-radius: 12px;
-      box-shadow: 0 0 20px rgba(255, 140, 0, 0.6);
       text-align: center;
-      font-size: 20px;
+      box-shadow: 0 0 15px #000;
     }
-
+    .logout-box p {
+      font-size: 20px;
+      color: #333;
+      margin-bottom: 20px;
+      font-family: cursive;
+    }
     .logout-box button {
-      margin-top: 20px;
       padding: 10px 20px;
+      margin: 0 10px;
       border: none;
-      background: #ffdddd;
-      color: #000;
-      font-weight: bold;
       border-radius: 6px;
+      font-size: 16px;
       cursor: pointer;
     }
-
-    .logout-box button:hover {
-      background: #fff;
+    .logout-box button:first-child {
+      background: red;
+      color: white;
+    }
+    .logout-box button:last-child {
+      background: gray;
+      color: white;
     }
   </style>
 </head>
@@ -190,11 +191,12 @@
     </div>
   </div>
 
-  <!-- Logout Modal -->
+  <!-- ✅ Logout Modal -->
   <div id="logoutModal">
     <div class="logout-box">
-      <p>Do you want to logout?</p>
+      <p>Do you want to logout, Owner?</p>
       <button onclick="confirmLogout()">Yes</button>
+      <button onclick="hideLogoutModal()">No</button>
     </div>
   </div>
 
@@ -226,10 +228,14 @@
       document.getElementById("logoutModal").style.display = "flex";
     }
 
+    function hideLogoutModal() {
+      document.getElementById("logoutModal").style.display = "none";
+    }
+
     function confirmLogout() {
       localStorage.clear();
       supabase.auth.signOut();
-      window.location.href = "https://indiaki.in/hd"; // ✅ यहाँ आपका redirect URL है
+      window.location.href = "../index.html";
     }
 
     document.addEventListener("click", function(e) {
@@ -241,8 +247,11 @@
         dropdown.style.display = "none";
       }
 
-      if (modal.style.display === "flex" && !modal.querySelector('.logout-box').contains(e.target)) {
-        modal.style.display = "none";
+      if (
+        modal.style.display === "flex" &&
+        !modal.querySelector(".logout-box").contains(e.target)
+      ) {
+        hideLogoutModal();
       }
     });
 
