@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -9,14 +10,14 @@
       margin: 0; padding: 0; box-sizing: border-box; font-family: sans-serif;
     }
     body {
-      background: #001f3f; /* Dark blue background */
+      background: #001f3f;
       color: #ffffff;
     }
     .topbar {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: #d0e9ff;
+      background: #b3d9ff;
       color: #000;
       padding: 15px 20px;
       position: relative;
@@ -25,11 +26,15 @@
     }
     .topbar .welcome {
       font-size: 18px;
+      font-weight: bold;
+      background: linear-gradient(to right, #1e3c72, #2a5298);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
     .profile {
       width: 40px;
       height: 40px;
-      background: #cccccc;
+      background: #999;
       border-radius: 50%;
       cursor: pointer;
       position: relative;
@@ -104,6 +109,45 @@
       border-bottom: 1px dashed #00bfff;
       color: #fff;
     }
+
+    /* Logout Modal Styles */
+    #logoutModal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+    }
+
+    .logout-box {
+      width: 80%;
+      max-width: 600px;
+      background: chocolate;
+      color: #fff;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(255, 140, 0, 0.6);
+      text-align: center;
+      font-size: 20px;
+    }
+
+    .logout-box button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      border: none;
+      background: #ffdddd;
+      color: #000;
+      font-weight: bold;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .logout-box button:hover {
+      background: #fff;
+    }
   </style>
 </head>
 <body>
@@ -113,9 +157,10 @@
     <div class="dropdown" id="profileMenu">
       <a href="profile/">My Profile</a>
       <a href="/setting/">Settings</a>
-      <a href="#" onclick="confirmLogout()">Logout</a>
+      <a href="#" onclick="showLogoutModal()">Logout</a>
     </div>
   </div>
+
   <div class="menubar">
     <a href="default/">Default Home</a>
     <a href="/revenue/">Revenue</a>
@@ -129,17 +174,31 @@
     <a href="/updates/">Updates Switch</a>
     <a href="/sync/">Supabase to Firebase</a>
     <a href="/maintenance/">Maintenance</a>
-    <a href="#" onclick="confirmLogout()">Logout</a>
-  </div>  <div class="content" id="wallet-data">
+    <a href="#" onclick="showLogoutModal()">Logout</a>
+  </div>
+
+  <div class="content" id="wallet-data">
     <div class="box">Loading wallet transactions...</div>
-  </div>  <div class="content">
+  </div>
+
+  <div class="content">
     <div class="payment-stats">
       <h2>💰 Real-Time Payment Sources</h2>
       <ul id="paymentList">
         <li>Loading payment data...</li>
       </ul>
     </div>
-  </div>  <script>
+  </div>
+
+  <!-- Logout Modal -->
+  <div id="logoutModal">
+    <div class="logout-box">
+      <p>Do you want to logout?</p>
+      <button onclick="confirmLogout()">Yes</button>
+    </div>
+  </div>
+
+  <script>
     const supabase = window.supabase.createClient(
       'https://ejbvidirnsjvadvekede.supabase.co',
       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVqYnZpZGlybnNqdmFkdmVrZWRlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTM2MTA3ODMsImV4cCI6MjA2OTE4Njc4M30.KoCt8f2bXjn3843XOsRMLwyZ0lKpARkrRqb_GXlGfUs'
@@ -163,20 +222,27 @@
       dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
     }
 
+    function showLogoutModal() {
+      document.getElementById("logoutModal").style.display = "flex";
+    }
+
     function confirmLogout() {
-      const confirmBox = window.confirm("Do you want to logout?");
-      if (confirmBox) {
-        localStorage.clear();
-        supabase.auth.signOut();
-        window.location.href = "../index.html";
-      }
+      localStorage.clear();
+      supabase.auth.signOut();
+      window.location.href = "https://indiaki.in/hd"; // ✅ यहाँ आपका redirect URL है
     }
 
     document.addEventListener("click", function(e) {
       const profile = document.querySelector(".profile");
       const dropdown = document.getElementById("profileMenu");
+      const modal = document.getElementById("logoutModal");
+
       if (!profile.contains(e.target) && !dropdown.contains(e.target)) {
         dropdown.style.display = "none";
+      }
+
+      if (modal.style.display === "flex" && !modal.querySelector('.logout-box').contains(e.target)) {
+        modal.style.display = "none";
       }
     });
 
@@ -240,5 +306,6 @@
       await updatePaymentList();
       setInterval(updatePaymentList, 30000);
     };
-  </script></body>
+  </script>
+</body>
 </html>
