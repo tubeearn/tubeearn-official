@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TubeEarn Owner Dashboard</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: sans-serif;
+    }
+    body {
+      background: #b0b0b0;
+      color: #333;
+    }
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #1f1f1f;
+      color: #ffffff;
+      padding: 15px 20px;
+      position: relative;
+    }
+    .topbar .welcome {
+      font-size: 18px;
+    }
+    .profile {
+      width: 40px;
+      height: 40px;
+      background: #cccccc;
+      border-radius: 50%;
+      cursor: pointer;
+      position: relative;
+    }
+    .dropdown {
+      display: none;
+      position: absolute;
+      top: 60px;
+      right: 20px;
+      background: white;
+      border: 1px solid #ccc;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      z-index: 99;
+    }
+    .dropdown a {
+      display: block;
+      padding: 10px;
+      color: #333;
+      text-decoration: none;
+    }
+    .dropdown a:hover {
+      background: #d0e9ff;
+    }
+    .menubar {
+      display: flex;
+      overflow-x: auto;
+      background: #d0e9ff;
+      padding: 10px;
+      border-top: 2px solid #999;
+      border-bottom: 2px solid #999;
+    }
+    .menubar a {
+      min-width: 150px;
+      padding: 10px;
+      margin-right: 10px;
+      background: #333;
+      color: #fff;
+      border-radius: 8px;
+      text-align: center;
+      text-decoration: none;
+      flex-shrink: 0;
+    }
+    .menubar a:hover {
+      background: #444;
+    }
+    .content {
+      padding: 20px;
+      background: #c7c7c7;
+    }
+    .box {
+      padding: 20px;
+      background: #fff;
+      border-radius: 8px;
+      border: 2px solid #2196f3;
+      color: #2196f3;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="topbar">
+    <div class="welcome">Welcome to Owner Mr. Sanjeev Kumar</div>
+    <div class="profile" onclick="toggleProfile()"></div>
+    <div class="dropdown" id="profileMenu">
+      <a href="/profile/">My Profile</a>
+      <a href="/settings/">Settings</a> <!-- 🔁 Same settings link -->
+      <a href="/logout/">Logout</a>
+    </div>
+  </div>
+
+  <div class="menubar">
+    <a href="/default/">Default Home</a>
+    <a href="/revenue/">Revenue</a>
+    <a href="/userdata/">User Data</a>
+    <a href="/wallet/">Wallet</a>
+    <a href="/adsense/">AdSense</a>
+    <a href="/settings/">Setting</a> <!-- 🔁 Same settings link -->
+    <a href="/monetization/">Monetization</a>
+    <a href="/aisanjeev/">AiSanjeev Command</a>
+    <a href="/security/">Security</a>
+    <a href="/updates/">Updates Switch</a>
+    <a href="/sync/">Supabase to Firebase</a>
+    <a href="/maintenance/">Maintenance</a>
+    <a href="/logout/">Logout</a>
+  </div>
+
+  <div class="content" id="wallet-data">
+    <div class="box">Loading wallet transactions...</div>
+  </div>
+
+  <script>
+    function toggleProfile() {
+      const dropdown = document.getElementById("profileMenu");
+      dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+    }
+
+    document.addEventListener("click", function(e) {
+      const profile = document.querySelector(".profile");
+      const dropdown = document.getElementById("profileMenu");
+      if (!profile.contains(e.target) && !dropdown.contains(e.target)) {
+        dropdown.style.display = "none";
+      }
+    });
+
+    const supabase = window.supabase.createClient(
+      'https://ejbvidirnsjvadvekede.supabase.co',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVqYnZpZGlybnNqdmFkdmVrZWRlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTM2MTA3ODMsImV4cCI6MjA2OTE4Njc4M30.KoCt8f2bXjn3843XOsRMLwyZ0lKpARkrRqb_GXlGfUs'
+    );
+
+    async function loadWalletTransactions() {
+      const { data, error } = await supabase
+        .from('wallet-transactions')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      const container = document.getElementById('wallet-data');
+      container.innerHTML = '';
+
+      if (error) {
+        container.innerHTML = '<div class="box">Error loading data.</div>';
+        console.error('Supabase error:', error.message);
+        return;
+      }
+
+      if (data.length === 0) {
+        container.innerHTML = '<div class="box">No transactions found.</div>';
+        return;
+      }
+
+      data.forEach(tx => {
+        const div = document.createElement('div');
+        div.className = 'box';
+        div.innerHTML = `
+          <p><strong>User:</strong> ${tx.user || 'N/A'}</p>
+          <p><strong>Amount:</strong> ₹${tx.amount}</p>
+          <p><strong>Status:</strong> ${tx.status}</p>
+          <p><strong>Date:</strong> ${new Date(tx.created_at).toLocaleString()}</p>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    window.onload = loadWalletTransactions;
+  </script>
+</body>
+</html>
