@@ -164,11 +164,10 @@
     }
 
     function confirmLogout() {
-      const confirmBox = window.confirm("Do you want to logout?");
-      if (confirmBox) {
-        localStorage.clear();
-        supabase.auth.signOut();
-        window.location.href = "../index.html";
+  localStorage.clear();
+  supabase.auth.signOut();
+  window.location.href = "../index.html";
+    }
       }
     }
 
