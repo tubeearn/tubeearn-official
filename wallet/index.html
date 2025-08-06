@@ -1,1 +1,89 @@
-week CM USB
+<!-- wallet.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TubeEarn Wallet Summary</title>
+  <style>
+    body { font-family: Arial; padding: 20px; }
+    .summary { margin-bottom: 20px; }
+    .summary div { margin: 10px 0; font-size: 18px; }
+    .gift { color: green; }
+    .revenue { color: blue; }
+    .admin { color: red; }
+    button { padding: 10px; font-size: 16px; }
+  </style>
+</head>
+<body>
+  <h2>TubeEarn Wallet Summary</h2>
+  <div class="summary">
+    <div class="gift" id="giftTotal"></div>
+    <div class="revenue" id="revenueTotal"></div>
+    <div class="admin" id="adminTotal"></div>
+    <div class="gift" id="userTotal"></div>
+  </div>
+  <button onclick="downloadPDF()">📥 Download PDF</button>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script>
+    const SUPABASE_URL = "https://ejbvidirnsjvadvekede.supabase.co";
+    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVqYnZpZGlybnNqdmFkdmVrZWRlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTM2MTA3ODMsImV4cCI6MjA2OTE4Njc4M30.KoCt8f2bXjn3843XOsRMLwyZ0lKpARkrRqb_GXlGfUs";
+
+    const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    async function loadWalletData() {
+      const { data, error } = await supabase
+        .from('wallet-transactions')
+        .select('*');
+
+      if (error) {
+        alert('Error fetching data');
+        return;
+      }
+
+      let giftTotal = 0;
+      let revenueTotal = 0;
+      let adminTotal = 0;
+      let userTotal = 0;
+
+      data.forEach(tx => {
+        if (tx.type === "gift") {
+          giftTotal += tx.amount;
+          adminTotal += tx.amount * 0.20;
+          userTotal += tx.amount * 0.80;
+        }
+        if (tx.type === "revenue") {
+          revenueTotal += tx.amount;
+          adminTotal += tx.amount * 0.45;
+          userTotal += tx.amount * 0.55;
+        }
+      });
+
+      document.getElementById('giftTotal').innerText = `🎁 Total Gifts Received: ₹${giftTotal}`;
+      document.getElementById('revenueTotal').innerText = `💰 Total Ad Revenue: ₹${revenueTotal}`;
+      document.getElementById('adminTotal').innerText = `🧾 Admin Commission: ₹${adminTotal.toFixed(2)}`;
+      document.getElementById('userTotal').innerText = `👤 Performer Earnings: ₹${userTotal.toFixed(2)}`;
+    }
+
+    async function downloadPDF() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+
+      doc.setFontSize(18);
+      doc.text("TubeEarn Wallet Report", 20, 20);
+
+      doc.setFontSize(12);
+      doc.text(document.getElementById('giftTotal').innerText, 20, 40);
+      doc.text(document.getElementById('revenueTotal').innerText, 20, 50);
+      doc.text(document.getElementById('adminTotal').innerText, 20, 60);
+      doc.text(document.getElementById('userTotal').innerText, 20, 70);
+
+      doc.save("TubeEarn-Wallet-Report.pdf");
+    }
+
+    loadWalletData();
+  </script>
+</body>
+</html>
