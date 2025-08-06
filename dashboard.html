@@ -1,9 +1,9 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>TubeEarn Owner Dashboard</title>
-  <!-- Supabase JS SDK -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: sans-serif; }
@@ -80,7 +80,6 @@
       margin-bottom: 10px;
     }
 
-    /* 🔥 Payment sources style */
     .payment-stats {
       background: #f0f0f0;
       padding: 16px;
@@ -135,7 +134,6 @@
     <div class="box">Loading wallet transactions...</div>
   </div>
 
-  <!-- ✅ Real-time Payment Sources (Ads, BTC, PayPal, Pi, INR etc) -->
   <div class="content">
     <div class="payment-stats">
       <h2>💰 Real-Time Payment Sources</h2>
@@ -159,7 +157,6 @@
       }
     });
 
-    // Supabase connection
     const supabase = window.supabase.createClient(
       'https://ejbvidirnsjvadvekede.supabase.co',
       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVqYnZpZGlybnNqdmFkdmVrZWRlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTM2MTA3ODMsImV4cCI6MjA2OTE4Njc4M30.KoCt8f2bXjn3843XOsRMLwyZ0lKpARkrRqb_GXlGfUs'
@@ -198,24 +195,25 @@
       });
     }
 
-    async function fetchRealPayments() {
-      // 🔁 Here, you can replace with your real Supabase table or Firebase function
-      return [
-        { source: 'AdSense', amount: '₹500', time: 'Just now' },
-        { source: 'Gift (BTC)', amount: '0.0002 BTC', time: '2 mins ago' },
-        { source: 'INR (UPI)', amount: '₹99', time: '5 mins ago' },
-        { source: 'PayPal', amount: '$10', time: '10 mins ago' },
-        { source: 'Pi Wallet', amount: '15π', time: 'Today' }
-      ];
-    }
-
     async function updatePaymentList() {
-      const payments = await fetchRealPayments();
+      const { data, error } = await supabase
+        .from('payment-sources')
+        .select('*')
+        .order('created_at', { ascending: false })
+        .limit(10);
+
       const list = document.getElementById('paymentList');
       list.innerHTML = '';
-      payments.forEach(p => {
+
+      if (error || !data) {
+        list.innerHTML = '<li>Error loading payment sources.</li>';
+        console.error('Payment source error:', error?.message);
+        return;
+      }
+
+      data.forEach(p => {
         const li = document.createElement('li');
-        li.textContent = `${p.source} - ${p.amount} (${p.time})`;
+        li.textContent = `${p.source} - ${p.amount} (${new Date(p.created_at).toLocaleTimeString()})`;
         list.appendChild(li);
       });
     }
@@ -223,7 +221,7 @@
     window.onload = function() {
       loadWalletTransactions();
       updatePaymentList();
-      setInterval(updatePaymentList, 30000); // Refresh every 30s
+      setInterval(updatePaymentList, 30000);
     };
   </script>
 </body>
