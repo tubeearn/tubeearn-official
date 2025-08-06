@@ -6,13 +6,9 @@
   <title>TubeEarn Owner Dashboard</title>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
-    * {
-      margin: 0; padding: 0; box-sizing: border-box; font-family: sans-serif;
-    }
-    body {
-      background: #001f3f;
-      color: #ffffff;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: sans-serif; }
+    body { background: #001f3f; color: #ffffff; }
+    
     .topbar {
       display: flex;
       justify-content: space-between;
@@ -20,23 +16,21 @@
       background: #0a2746;
       color: #fff;
       padding: 15px 20px;
-      position: relative;
       border-top: 4px solid red;
       border-bottom: 4px solid red;
     }
-    .topbar .welcome {
-      font-size: 20px;
-      font-family: cursive;
-    }
+    .topbar .welcome { font-size: 20px; font-family: cursive; }
+
     .profile {
       width: 40px;
       height: 40px;
       background: #333;
       border-radius: 50%;
       cursor: pointer;
-      position: relative;
       box-shadow: 0 0 5px #00bfff;
+      position: relative;
     }
+
     .dropdown {
       display: none;
       position: absolute;
@@ -56,6 +50,7 @@
     .dropdown a:hover {
       background: #d0e9ff;
     }
+
     .menubar {
       display: flex;
       overflow-x: auto;
@@ -78,9 +73,9 @@
     .menubar a:hover {
       background: #007bff;
     }
-    .content {
-      padding: 20px;
-    }
+
+    .content { padding: 20px; }
+
     .box {
       padding: 20px;
       background: #001a33;
@@ -90,6 +85,7 @@
       font-weight: bold;
       margin-bottom: 10px;
     }
+
     .payment-stats {
       background: #002244;
       padding: 16px;
@@ -141,17 +137,12 @@
       font-size: 16px;
       cursor: pointer;
     }
-    .logout-box button:first-child {
-      background: red;
-      color: white;
-    }
-    .logout-box button:last-child {
-      background: gray;
-      color: white;
-    }
+    .logout-box button:first-child { background: red; color: white; }
+    .logout-box button:last-child { background: gray; color: white; }
   </style>
 </head>
 <body>
+
   <div class="topbar">
     <div class="welcome">Welcome to Owner Mr. Sanjeev Kumar</div>
     <div class="profile" onclick="toggleProfile()"></div>
