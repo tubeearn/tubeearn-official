@@ -1,1 +1,98 @@
-giihk
+<!-- ✅ Owner Settings: Supabase API Update Panel --><!-- 📁 Save this file as /owner/settings/update-supabase.html --><!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Update Supabase API</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 20px;
+    }
+    .settings-icon {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: #007bff;
+      color: white;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      cursor: pointer;
+      z-index: 999;
+    }
+    #settingsPanel {
+      display: none;
+      position: fixed;
+      top: 70px;
+      right: 20px;
+      background: white;
+      border: 1px solid #ccc;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      width: 300px;
+      z-index: 998;
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 8px;
+      margin: 5px 0 15px 0;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    button {
+      background: #28a745;
+      color: white;
+      border: none;
+      padding: 10px;
+      width: 100%;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #218838;
+    }
+  </style>
+</head>
+<body>  <!-- ⚙️ Settings Icon -->  <div class="settings-icon" onclick="toggleSettings()">⚙️</div>  <!-- 🔐 Supabase Settings Panel -->  <div id="settingsPanel">
+    <h3>🔐 Supabase Settings</h3>
+    <input type="text" id="supabaseUrl" placeholder="Supabase URL">
+    <input type="text" id="supabaseKey" placeholder="Supabase API Key">
+    <button onclick="updateSupabaseKeys()">Update</button>
+  </div>  <script>
+    function toggleSettings() {
+      const panel = document.getElementById('settingsPanel');
+      panel.style.display = panel.style.display === 'block' ? 'none' : 'block';
+    }
+
+    function updateSupabaseKeys() {
+      const url = document.getElementById("supabaseUrl").value.trim();
+      const key = document.getElementById("supabaseKey").value.trim();
+
+      if (!url || !key) {
+        alert("Please fill both fields");
+        return;
+      }
+
+      localStorage.setItem("SUPABASE_URL", url);
+      localStorage.setItem("SUPABASE_KEY", key);
+
+      alert("✅ Supabase URL & Key updated successfully!");
+      location.reload();
+    }
+
+    // Optional: Apply default key if not present (for first-time run)
+    if (!localStorage.getItem("SUPABASE_URL")) {
+      localStorage.setItem("SUPABASE_URL", "https://ejbvidirnsjvadvekede.supabase.co");
+    }
+    if (!localStorage.getItem("SUPABASE_KEY")) {
+      localStorage.setItem("SUPABASE_KEY", "YOUR_DEFAULT_SUPABASE_KEY_HERE");
+    }
+  </script></body>
+</html>
